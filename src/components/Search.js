@@ -1,8 +1,16 @@
 import React, { Component } from "react";
-import { Button } from "react-bootstrap";
+import Button from "react-bootstrap-button-loader";
+// import { Button } from "react-bootstrap";
 import DropDown from "./DropDown";
 
 export default class Search extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoading: false
+        };
+    }
+
     render() {
         return (
             <div>
@@ -29,8 +37,15 @@ export default class Search extends Component {
                 </div>
                 <Button
                     bsStyle="primary"
+                    loading={this.state.isLoading}
+                    disabled={this.state.isLoading}
                     style={{ marginTop: "50px" }}
-                    onClick={this.props.searchOnPress}
+                    onClick={async () => {
+                        this.setState({ isLoading: true }, async () => {
+                            await this.props.searchOnPress();
+                            this.setState({ isLoading: false });
+                        });
+                    }}
                 >
                     Search
                 </Button>

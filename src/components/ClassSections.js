@@ -1,27 +1,14 @@
 import React, { Component } from "react";
-import { instance } from "../utils/apiConfig";
 
-export default class ClassSections extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            classSections: []
-        };
-    }
+const defaultProps = {
+    classSections: []
+};
 
-    async componentDidMount() {
-        await this.retrieveClassSections();
-    }
-
-    async retrieveClassSections() {
-        const { data } = await instance.get("/classSections");
-        this.setState({ classSections: data });
-    }
-
+class ClassSections extends Component {
     render() {
         return (
             <div>
-                {this.state.classSections.map(({ details, className }) => {
+                {this.props.classSections.map(({ details, className }) => {
                     return (
                         <div>
                             <div style={{ fontWeight: "bold", fontSize: 12 }}>
@@ -51,3 +38,7 @@ export default class ClassSections extends Component {
         );
     }
 }
+
+ClassSections.defaultProps = defaultProps;
+
+export default ClassSections;
