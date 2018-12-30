@@ -8,16 +8,14 @@ export default class App extends Component {
         return (
             <div className="App">
                 <div style={{ display: "flex" }}>
-                    <div
-                        style={{
-                            flex: 1
-                        }}
-                    >
+                    <div style={{ flex: 1, flexGrow: 1 }}>
                         <Calendar />
                     </div>
                     <div
                         style={{
-                            flex: 1
+                            minWidth: "550px",
+                            maxWidth: "550px",
+                            flexGrow: 1
                         }}
                     >
                         <Console />

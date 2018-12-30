@@ -4,11 +4,7 @@ import Search from "./Search";
 export default class Console extends Component {
     render() {
         return (
-            <div
-                style={{
-                    backgroundColor: "yellow"
-                }}
-            >
+            <div style={{}}>
                 <Search />
             </div>
         );
