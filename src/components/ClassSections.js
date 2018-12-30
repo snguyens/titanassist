@@ -22,7 +22,30 @@ export default class ClassSections extends Component {
         return (
             <div>
                 {this.state.classSections.map(({ details, className }) => {
-                    return <div>{className}</div>;
+                    return (
+                        <div>
+                            <div style={{ fontWeight: "bold", fontSize: 12 }}>
+                                {className}
+                            </div>
+                            {details.map(
+                                ({
+                                    code,
+                                    dates,
+                                    professor,
+                                    room,
+                                    section,
+                                    time
+                                }) => {
+                                    return (
+                                        <div>
+                                            {code}, {dates}, {professor},{room},{" "}
+                                            {section}, {time}
+                                        </div>
+                                    );
+                                }
+                            )}
+                        </div>
+                    );
                 })}
             </div>
         );
