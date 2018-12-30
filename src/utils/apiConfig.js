@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const instance = axios.create({
-    baseURL: "http://localhost:3000",
+export const instance = axios.create({
+    baseURL: "http://localhost:8080",
     timeout: 60000
 });

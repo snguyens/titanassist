@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, DropdownButton, MenuItem } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import DropDown from "./DropDown";
 
 export default class Search extends Component {
@@ -27,7 +27,11 @@ export default class Search extends Component {
                         </div>
                     </div>
                 </div>
-                <Button bsStyle="primary" style={{ marginTop: "50px" }}>
+                <Button
+                    bsStyle="primary"
+                    style={{ marginTop: "50px" }}
+                    onClick={this.props.searchOnPress}
+                >
                     Search
                 </Button>
             </div>

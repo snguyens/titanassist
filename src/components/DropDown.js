@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, DropdownButton, MenuItem } from "react-bootstrap";
+import { DropdownButton, MenuItem } from "react-bootstrap";
 
 const defaultProps = {
     items: []
