@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Button from "react-bootstrap-button-loader";
-// import { Button } from "react-bootstrap";
 import DropDown from "./DropDown";
 
 export default class Search extends Component {
@@ -40,7 +39,7 @@ export default class Search extends Component {
                     loading={this.state.isLoading}
                     disabled={this.state.isLoading}
                     style={{ marginTop: "50px" }}
-                    onClick={async () => {
+                    onClick={() => {
                         this.setState({ isLoading: true }, async () => {
                             await this.props.searchOnPress();
                             this.setState({ isLoading: false });
