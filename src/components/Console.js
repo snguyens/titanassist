@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import Search from "./Search";
 import ClassSections from "./ClassSections";
+import { SEARCH, CLASS_SECTIONS } from "../constants/display";
 import { connect } from "react-redux";
 
 class Console extends Component {
     renderSwitch() {
         switch (this.props.display) {
-            case "SEARCH":
+            case SEARCH:
                 return <Search />;
-            case "CLASS_SECTIONS":
+            case CLASS_SECTIONS:
                 return <ClassSections />;
             default:
                 return <Search />;

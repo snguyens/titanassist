@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import Button from "react-bootstrap-button-loader";
 import DropDown from "./DropDown";
-import { instance } from "../utils/apiConfig";
-import { subjectMap } from "../constants";
+import { subjectMap } from "../constants/subjects";
 import { connect } from "react-redux";
-import { updateClassSections, updateDisplay, searchOnPress } from "../actions";
+import { searchForClasses } from "../actions";
 
 class Search extends Component {
     constructor(props) {
@@ -14,6 +13,14 @@ class Search extends Component {
             subject: ""
         };
     }
+
+    searchForClasses = async () => {
+        this.setState({ isLoading: true });
+        await this.props.searchForClasses({
+            subject: this.state.subject
+        });
+        this.setState({ isLoading: false });
+    };
 
     render() {
         return (
@@ -50,16 +57,8 @@ class Search extends Component {
                 <Button
                     bsStyle="primary"
                     loading={this.state.isLoading}
-                    disabled={this.state.isLoading}
                     style={{ marginTop: "50px" }}
-                    onClick={() => {
-                        this.setState({ isLoading: true }, async () => {
-                            await this.props.searchOnPress({
-                                subject: this.state.subject
-                            });
-                            this.setState({ isLoading: false });
-                        });
-                    }}
+                    onClick={this.searchForClasses}
                 >
                     Search
                 </Button>
@@ -70,10 +69,7 @@ class Search extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        updateClassSections: classSections =>
-            dispatch(updateClassSections(classSections)),
-        updateDisplay: display => dispatch(updateDisplay(display)),
-        searchOnPress: configs => dispatch(searchOnPress(configs))
+        searchForClasses: configs => dispatch(searchForClasses(configs))
     };
 }
 

@@ -13,7 +13,7 @@ class DropDown extends Component {
                 style={{
                     width: "300px"
                 }}
-                title={this.props.value ? this.props.value : ""}
+                title={this.props.value}
             >
                 {this.props.items.map(({ displayName, value }) => (
                     <MenuItem
