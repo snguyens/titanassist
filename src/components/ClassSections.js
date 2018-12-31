@@ -7,6 +7,18 @@ const defaultProps = {
 };
 
 class ClassSections extends Component {
+    renderStatus(status) {
+        if (status === "OPEN") {
+            return <span style={{ color: "green" }}>OPEN</span>;
+        }
+        if (status === "CLOSED") {
+            return <span style={{ color: "red" }}>CLOSED</span>;
+        }
+        if (status === "WAITLIST") {
+            return <span style={{ color: "orange" }}>WAITLIST</span>;
+        }
+    }
+
     render() {
         return (
             <div>
@@ -27,6 +39,7 @@ class ClassSections extends Component {
                             <Table>
                                 <thead>
                                     <tr>
+                                        <th>Status</th>
                                         <th>Code</th>
                                         <th>Professor</th>
                                         <th>Room</th>
@@ -37,8 +50,8 @@ class ClassSections extends Component {
                                 <tbody>
                                     {details.map(
                                         ({
-                                            code,
-                                            dates,
+                                            status,
+                                            code, // dates,
                                             professor,
                                             room,
                                             section,
@@ -46,6 +59,11 @@ class ClassSections extends Component {
                                         }) => {
                                             return (
                                                 <tr>
+                                                    <td>
+                                                        {this.renderStatus(
+                                                            status
+                                                        )}
+                                                    </td>
                                                     <td>{code}</td>
                                                     {/* <td>{dates}</td> */}
                                                     <td>{professor}</td>
