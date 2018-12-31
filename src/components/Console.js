@@ -1,35 +1,17 @@
 import React, { Component } from "react";
 import Search from "./Search";
 import ClassSections from "./ClassSections";
-import { instance } from "../utils/apiConfig";
+import { connect } from "react-redux";
 
-const SEARCH = "SEARCH";
-const CLASS_SECTIONS = "CLASS_SECTIONS";
-
-export default class Console extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            classSections: [],
-            display: SEARCH
-        };
-    }
-
-    searchOnPress = async configs => {
-        const { data } = await instance.get("/classSections", {
-            params: { subject: configs.subject }
-        });
-        this.setState({ classSections: data, display: CLASS_SECTIONS });
-    };
-
+class Console extends Component {
     renderSwitch() {
-        switch (this.state.display) {
-            case SEARCH:
-                return <Search searchOnPress={this.searchOnPress} />;
-            case CLASS_SECTIONS:
-                return (
-                    <ClassSections classSections={this.state.classSections} />
-                );
+        switch (this.props.display) {
+            case "SEARCH":
+                return <Search />;
+            case "CLASS_SECTIONS":
+                return <ClassSections />;
+            default:
+                return <Search />;
         }
     }
 
@@ -37,3 +19,14 @@ export default class Console extends Component {
         return <div>{this.renderSwitch()}</div>;
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        display: state.console ? state.console.display : ""
+    };
+}
+
+export default connect(
+    mapStateToProps,
+    null
+)(Console);

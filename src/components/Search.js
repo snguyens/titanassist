@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import Button from "react-bootstrap-button-loader";
 import DropDown from "./DropDown";
+import { instance } from "../utils/apiConfig";
 import { subjectMap } from "../constants";
+import { connect } from "react-redux";
+import { updateClassSections, updateDisplay } from "../actions";
 
-export default class Search extends Component {
+class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -11,6 +14,14 @@ export default class Search extends Component {
             subject: ""
         };
     }
+
+    searchOnPress = async configs => {
+        const { data } = await instance.get("/classSections", {
+            params: { subject: configs.subject }
+        });
+        await this.props.updateClassSections(data);
+        await this.props.updateDisplay("CLASS_SECTIONS");
+    };
 
     render() {
         return (
@@ -51,7 +62,7 @@ export default class Search extends Component {
                     style={{ marginTop: "50px" }}
                     onClick={() => {
                         this.setState({ isLoading: true }, async () => {
-                            await this.props.searchOnPress({
+                            await this.searchOnPress({
                                 subject: this.state.subject
                             });
                             this.setState({ isLoading: false });
@@ -64,3 +75,16 @@ export default class Search extends Component {
         );
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    return {
+        updateClassSections: classSections =>
+            dispatch(updateClassSections(classSections)),
+        updateDisplay: display => dispatch(updateDisplay(display))
+    };
+}
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(Search);

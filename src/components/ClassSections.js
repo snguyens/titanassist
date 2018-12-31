@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Table } from "react-bootstrap";
+import { connect } from "react-redux";
 
 const defaultProps = {
     classSections: []
@@ -67,4 +68,13 @@ class ClassSections extends Component {
 
 ClassSections.defaultProps = defaultProps;
 
-export default ClassSections;
+function mapStateToProps(state) {
+    return {
+        classSections: state.console ? state.console.classSections : []
+    };
+}
+
+export default connect(
+    mapStateToProps,
+    null
+)(ClassSections);
