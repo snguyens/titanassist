@@ -4,7 +4,7 @@ import DropDown from "./DropDown";
 import { instance } from "../utils/apiConfig";
 import { subjectMap } from "../constants";
 import { connect } from "react-redux";
-import { updateClassSections, updateDisplay } from "../actions";
+import { updateClassSections, updateDisplay, searchOnPress } from "../actions";
 
 class Search extends Component {
     constructor(props) {
@@ -14,14 +14,6 @@ class Search extends Component {
             subject: ""
         };
     }
-
-    searchOnPress = async configs => {
-        const { data } = await instance.get("/classSections", {
-            params: { subject: configs.subject }
-        });
-        await this.props.updateClassSections(data);
-        await this.props.updateDisplay("CLASS_SECTIONS");
-    };
 
     render() {
         return (
@@ -62,7 +54,7 @@ class Search extends Component {
                     style={{ marginTop: "50px" }}
                     onClick={() => {
                         this.setState({ isLoading: true }, async () => {
-                            await this.searchOnPress({
+                            await this.props.searchOnPress({
                                 subject: this.state.subject
                             });
                             this.setState({ isLoading: false });
@@ -80,7 +72,8 @@ function mapDispatchToProps(dispatch) {
     return {
         updateClassSections: classSections =>
             dispatch(updateClassSections(classSections)),
-        updateDisplay: display => dispatch(updateDisplay(display))
+        updateDisplay: display => dispatch(updateDisplay(display)),
+        searchOnPress: configs => dispatch(searchOnPress(configs))
     };
 }
 
