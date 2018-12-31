@@ -7,84 +7,84 @@ import { connect } from "react-redux";
 import { updateClassSections, updateDisplay } from "../actions";
 
 class Search extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLoading: false,
-            subject: ""
-        };
-    }
-
-    searchOnPress = async configs => {
-        const { data } = await instance.get("/classSections", {
-            params: { subject: configs.subject }
-        });
-        await this.props.updateClassSections(data);
-        await this.props.updateDisplay("CLASS_SECTIONS");
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false,
+      subject: ""
     };
+  }
 
-    render() {
-        return (
-            <div>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div style={{ display: "flex", flexDirection: "row" }}>
-                        <div style={{ flex: 1 }}>Term</div>
+  searchOnPress = async configs => {
+    const { data } = await instance.get("/classSections", {
+      params: { subject: configs.subject }
+    });
+    await this.props.updateClassSections(data);
+    await this.props.updateDisplay("CLASS_SECTIONS");
+  };
 
-                        <div style={{ flex: 3 }}>
-                            <DropDown items={[{ name: "Summer 2018" }]} />
-                        </div>
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "row" }}>
-                        <div style={{ flex: 1 }}>Subject</div>
+  render() {
+    return (
+      <div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <div style={{ flex: 1 }}>Term</div>
 
-                        <div style={{ flex: 3 }}>
-                            <DropDown
-                                value={subjectMap[this.state.subject]}
-                                items={Object.keys(subjectMap).map(subject => {
-                                    return {
-                                        displayName: subjectMap[subject],
-                                        value: subject
-                                    };
-                                })}
-                                onClick={value => {
-                                    this.setState({
-                                        subject: value
-                                    });
-                                }}
-                            />
-                        </div>
-                    </div>
-                </div>
-                <Button
-                    bsStyle="primary"
-                    loading={this.state.isLoading}
-                    disabled={this.state.isLoading}
-                    style={{ marginTop: "50px" }}
-                    onClick={() => {
-                        this.setState({ isLoading: true }, async () => {
-                            await this.searchOnPress({
-                                subject: this.state.subject
-                            });
-                            this.setState({ isLoading: false });
-                        });
-                    }}
-                >
-                    Search
-                </Button>
+            <div style={{ flex: 3 }}>
+              <DropDown items={[{ name: "Summer 2018" }]} />
             </div>
-        );
-    }
+          </div>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <div style={{ flex: 1 }}>Subject</div>
+
+            <div style={{ flex: 3 }}>
+              <DropDown
+                value={subjectMap[this.state.subject]}
+                items={Object.keys(subjectMap).map(subject => {
+                  return {
+                    displayName: subjectMap[subject],
+                    value: subject
+                  };
+                })}
+                onClick={value => {
+                  this.setState({
+                    subject: value
+                  });
+                }}
+              />
+            </div>
+          </div>
+        </div>
+        <Button
+          bsStyle="primary"
+          loading={this.state.isLoading}
+          disabled={this.state.isLoading}
+          style={{ marginTop: "50px" }}
+          onClick={() => {
+            this.setState({ isLoading: true }, async () => {
+              await this.searchOnPress({
+                subject: this.state.subject
+              });
+              this.setState({ isLoading: false });
+            });
+          }}
+        >
+          Search
+        </Button>
+      </div>
+    );
+  }
 }
 
 function mapDispatchToProps(dispatch) {
-    return {
-        updateClassSections: classSections =>
-            dispatch(updateClassSections(classSections)),
-        updateDisplay: display => dispatch(updateDisplay(display))
-    };
+  return {
+    updateClassSections: classSections =>
+      dispatch(updateClassSections(classSections)),
+    updateDisplay: display => dispatch(updateDisplay(display))
+  };
 }
 
 export default connect(
-    null,
-    mapDispatchToProps
+  null,
+  mapDispatchToProps
 )(Search);
