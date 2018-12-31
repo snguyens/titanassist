@@ -15,8 +15,10 @@ export default class Console extends Component {
         };
     }
 
-    searchOnPress = async () => {
-        const { data } = await instance.get("/classSections");
+    searchOnPress = async configs => {
+        const { data } = await instance.get("/classSections", {
+            params: { subject: configs.subject }
+        });
         this.setState({ classSections: data, display: CLASS_SECTIONS });
     };
 

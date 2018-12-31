@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import Button from "react-bootstrap-button-loader";
 import DropDown from "./DropDown";
+import { subjectMap } from "../constants";
 
 export default class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: false
+            isLoading: false,
+            subject: ""
         };
     }
 
@@ -26,10 +28,18 @@ export default class Search extends Component {
 
                         <div style={{ flex: 3 }}>
                             <DropDown
-                                items={[
-                                    { name: "Biology" },
-                                    { name: "Computer Science" }
-                                ]}
+                                value={subjectMap[this.state.subject]}
+                                items={Object.keys(subjectMap).map(subject => {
+                                    return {
+                                        displayName: subjectMap[subject],
+                                        value: subject
+                                    };
+                                })}
+                                onClick={value => {
+                                    this.setState({
+                                        subject: value
+                                    });
+                                }}
                             />
                         </div>
                     </div>
@@ -41,7 +51,9 @@ export default class Search extends Component {
                     style={{ marginTop: "50px" }}
                     onClick={() => {
                         this.setState({ isLoading: true }, async () => {
-                            await this.props.searchOnPress();
+                            await this.props.searchOnPress({
+                                subject: this.state.subject
+                            });
                             this.setState({ isLoading: false });
                         });
                     }}
