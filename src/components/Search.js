@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Button from "react-bootstrap-button-loader";
 import { subjectMap } from "../constants/subjects";
+import { termMap } from "../constants/terms";
 import { connect } from "react-redux";
 import { searchForClasses } from "../actions";
 
@@ -9,19 +10,26 @@ class Search extends Component {
         super(props);
         this.state = {
             isLoading: false,
-            subject: ""
+            subject: "",
+            term: 0
         };
     }
 
     searchForClasses = async () => {
         this.setState({ isLoading: true });
         await this.props.searchForClasses({
-            subject: this.state.subject
+            subject: this.state.subject,
+            term: this.state.term
         });
         this.setState({ isLoading: false });
     };
 
-    handleChange = event => {
+    handleTermChange = event => {
+        this.setState({ term: event.target.value });
+        console.log(event.target.value);
+    };
+
+    handleSubjectChange = event => {
         this.setState({ subject: event.target.value });
     };
 
@@ -33,8 +41,18 @@ class Search extends Component {
                         <div style={{ flex: 1 }}>Term</div>
 
                         <div style={{ flex: 3 }}>
-                            Summer 2018
-                            {/* <DropDown items={[{ name: "Summer 2018" }]} /> */}
+                            <select
+                                value={this.state.term}
+                                onChange={this.handleTermChange}
+                            >
+                                {Object.keys(termMap).map(term => {
+                                    return (
+                                        <option value={term}>
+                                            {termMap[term]}
+                                        </option>
+                                    );
+                                })}
+                            </select>
                         </div>
                     </div>
                     <div style={{ display: "flex", flexDirection: "row" }}>
@@ -43,7 +61,7 @@ class Search extends Component {
                         <div style={{ flex: 3 }}>
                             <select
                                 value={this.state.subject}
-                                onChange={this.handleChange}
+                                onChange={this.handleSubjectChange}
                             >
                                 <option />
                                 {Object.keys(subjectMap).map(subject => {
@@ -53,8 +71,6 @@ class Search extends Component {
                                         </option>
                                     );
                                 })}
-                                <option value="grapefruit">Grapefruit</option>
-                                <option value="lime">Lime</option>
                             </select>
                         </div>
                     </div>
