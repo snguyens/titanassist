@@ -1,4 +1,3 @@
-import { api } from "../utils/apiConfig";
 import { getClassSections } from "../services";
 import { CLASS_SECTIONS } from "../constants/display";
 

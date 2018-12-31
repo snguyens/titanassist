@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Button from "react-bootstrap-button-loader";
-import DropDown from "./DropDown";
 import { subjectMap } from "../constants/subjects";
 import { connect } from "react-redux";
 import { searchForClasses } from "../actions";
@@ -22,6 +21,10 @@ class Search extends Component {
         this.setState({ isLoading: false });
     };
 
+    handleChange = event => {
+        this.setState({ subject: event.target.value });
+    };
+
     render() {
         return (
             <div>
@@ -30,27 +33,29 @@ class Search extends Component {
                         <div style={{ flex: 1 }}>Term</div>
 
                         <div style={{ flex: 3 }}>
-                            <DropDown items={[{ name: "Summer 2018" }]} />
+                            Summer 2018
+                            {/* <DropDown items={[{ name: "Summer 2018" }]} /> */}
                         </div>
                     </div>
                     <div style={{ display: "flex", flexDirection: "row" }}>
                         <div style={{ flex: 1 }}>Subject</div>
 
                         <div style={{ flex: 3 }}>
-                            <DropDown
-                                value={subjectMap[this.state.subject]}
-                                items={Object.keys(subjectMap).map(subject => {
-                                    return {
-                                        displayName: subjectMap[subject],
-                                        value: subject
-                                    };
+                            <select
+                                value={this.state.subject}
+                                onChange={this.handleChange}
+                            >
+                                <option />
+                                {Object.keys(subjectMap).map(subject => {
+                                    return (
+                                        <option value={subject}>
+                                            {subjectMap[subject]}
+                                        </option>
+                                    );
                                 })}
-                                onClick={value => {
-                                    this.setState({
-                                        subject: value
-                                    });
-                                }}
-                            />
+                                <option value="grapefruit">Grapefruit</option>
+                                <option value="lime">Lime</option>
+                            </select>
                         </div>
                     </div>
                 </div>
