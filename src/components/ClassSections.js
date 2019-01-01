@@ -28,18 +28,30 @@ class ClassSections extends Component {
                             <div
                                 style={{
                                     fontWeight: "bold",
-                                    fontSize: 18,
-                                    textAlign: "left",
-                                    textDecoration: "underline",
-                                    backgroundColor: "#F1F5F6"
+                                    fontSize: 16,
+                                    textAlign: "center",
+                                    backgroundColor: "#00376B",
+                                    color: "white",
+                                    padding: "10px"
                                 }}
                             >
                                 {className}
                             </div>
 
-                            <Table>
+                            <Table
+                                bordered
+                                hover
+                                style={{
+                                    marginBottom: 0
+                                }}
+                            >
                                 <thead>
-                                    <tr style={{ fontSize: 12 }}>
+                                    <tr
+                                        style={{
+                                            fontSize: 12,
+                                            backgroundColor: "#D3D3D3"
+                                        }}
+                                    >
                                         <th>Status</th>
                                         <th>Code</th>
                                         <th>Professor</th>
