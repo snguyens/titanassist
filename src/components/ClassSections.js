@@ -28,9 +28,10 @@ class ClassSections extends Component {
                             <div
                                 style={{
                                     fontWeight: "bold",
-                                    fontSize: 16,
+                                    fontSize: 18,
                                     textAlign: "left",
-                                    textDecoration: "underline"
+                                    textDecoration: "underline",
+                                    backgroundColor: "#F1F5F6"
                                 }}
                             >
                                 {className}
@@ -38,7 +39,7 @@ class ClassSections extends Component {
 
                             <Table>
                                 <thead>
-                                    <tr>
+                                    <tr style={{ fontSize: 12 }}>
                                         <th>Status</th>
                                         <th>Code</th>
                                         <th>Professor</th>
@@ -58,7 +59,7 @@ class ClassSections extends Component {
                                             time
                                         }) => {
                                             return (
-                                                <tr>
+                                                <tr style={{ fontSize: 12 }}>
                                                     <td>
                                                         {this.renderStatus(
                                                             status

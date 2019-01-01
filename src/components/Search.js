@@ -11,16 +11,21 @@ class Search extends Component {
         this.state = {
             isLoading: false,
             subject: "",
-            term: 0
+            term: 2193,
+            courseNumber: ""
         };
     }
 
     searchForClasses = async () => {
         this.setState({ isLoading: true });
-        await this.props.searchForClasses({
-            subject: this.state.subject,
-            term: this.state.term
-        });
+        try {
+            await this.props.searchForClasses({
+                subject: this.state.subject,
+                term: this.state.term
+            });
+        } catch (e) {
+            //todo: show error notification/message
+        }
         this.setState({ isLoading: false });
     };
 
@@ -31,6 +36,11 @@ class Search extends Component {
 
     handleSubjectChange = event => {
         this.setState({ subject: event.target.value });
+    };
+
+    handleCourseNumberChange = event => {
+        this.setState({ courseNumber: event.target.value });
+        console.log(event.target.value);
     };
 
     render() {
@@ -72,6 +82,18 @@ class Search extends Component {
                                     );
                                 })}
                             </select>
+                        </div>
+                    </div>
+
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                        <div style={{ flex: 1 }}>Course Number/Range</div>
+
+                        <div style={{ flex: 3 }}>
+                            <input
+                                type="text"
+                                value={this.state.courseNumber}
+                                onChange={this.handleCourseNumberChange}
+                            />
                         </div>
                     </div>
                 </div>
