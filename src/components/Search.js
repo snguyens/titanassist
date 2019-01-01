@@ -46,9 +46,15 @@ class Search extends Component {
     render() {
         return (
             <div>
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        textAlign: "left"
+                    }}
+                >
                     <div style={{ display: "flex", flexDirection: "row" }}>
-                        <div style={{ flex: 1 }}>Term</div>
+                        <div style={{ flex: 1 }}>Term:</div>
 
                         <div style={{ flex: 3 }}>
                             <select
@@ -66,7 +72,7 @@ class Search extends Component {
                         </div>
                     </div>
                     <div style={{ display: "flex", flexDirection: "row" }}>
-                        <div style={{ flex: 1 }}>Subject</div>
+                        <div style={{ flex: 1 }}>Subject:</div>
 
                         <div style={{ flex: 3 }}>
                             <select
@@ -86,7 +92,7 @@ class Search extends Component {
                     </div>
 
                     <div style={{ display: "flex", flexDirection: "row" }}>
-                        <div style={{ flex: 1 }}>Course Number/Range</div>
+                        <div style={{ flex: 1 }}>Course Number:</div>
 
                         <div style={{ flex: 3 }}>
                             <input

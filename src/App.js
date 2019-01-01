@@ -7,6 +7,20 @@ export default class App extends Component {
     render() {
         return (
             <div className="App">
+                <div
+                    style={{
+                        borderBottom: "2px solid #FE6800",
+                        backgroundColor: "#00376B",
+                        color: "white",
+                        padding: "5px",
+                        marginBottom: "10px",
+                        textAlign: "left",
+                        fontSize: 15,
+                        fontWeight: "bold"
+                    }}
+                >
+                    TitanAssist
+                </div>
                 <div style={{ display: "flex" }}>
                     <div
                         style={{
