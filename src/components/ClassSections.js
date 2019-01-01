@@ -49,7 +49,8 @@ class ClassSections extends Component {
                                     <tr
                                         style={{
                                             fontSize: 12,
-                                            backgroundColor: "#D3D3D3"
+                                            backgroundColor: "#D3D3D3",
+                                            textAlign: "center"
                                         }}
                                     >
                                         <th>Status</th>
@@ -71,7 +72,12 @@ class ClassSections extends Component {
                                             time
                                         }) => {
                                             return (
-                                                <tr style={{ fontSize: 12 }}>
+                                                <tr
+                                                    style={{
+                                                        fontSize: 12,
+                                                        textAlign: "left"
+                                                    }}
+                                                >
                                                     <td>
                                                         {this.renderStatus(
                                                             status

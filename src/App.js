@@ -8,11 +8,20 @@ export default class App extends Component {
         return (
             <div className="App">
                 <div style={{ display: "flex" }}>
-                    <div style={{ flex: 1, flexGrow: 1 }}>
+                    <div
+                        style={{
+                            flex: 1,
+                            flexGrow: 1,
+                            height: "100vh",
+                            overflow: "auto"
+                        }}
+                    >
                         <Calendar />
                     </div>
                     <div
                         style={{
+                            height: "100vh",
+                            overflow: "auto",
                             minWidth: "550px",
                             maxWidth: "550px",
                             flexGrow: 1
