@@ -15,7 +15,7 @@ class ClassSections extends Component {
             return <span style={{ color: "red" }}>CLOSED</span>;
         }
         if (status === "WAITLIST") {
-            return <span style={{ color: "orange" }}>WAITLIST</span>;
+            return <span style={{ color: "orange" }}>WAITL</span>;
         }
     }
 
