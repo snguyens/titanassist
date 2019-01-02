@@ -30,7 +30,6 @@ class Search extends Component {
 
     handleTermChange = event => {
         this.setState({ term: event.target.value });
-        console.log(event.target.value);
     };
 
     handleSubjectChange = event => {
@@ -39,7 +38,6 @@ class Search extends Component {
 
     handleCourseNumberChange = event => {
         this.setState({ courseNumber: event.target.value });
-        console.log(event.target.value);
     };
 
     render() {

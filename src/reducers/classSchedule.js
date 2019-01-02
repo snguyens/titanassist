@@ -25,69 +25,35 @@ const classSchedule = (
             const Wednesday = [];
             const Thursday = [];
             const Friday = [];
-            // const newState = Object.assign({}, state);
             const splitTime = action.class.time.split(" ");
             const day = splitTime[0];
             const time = splitTime[1] + " - " + splitTime[3];
+            const randomColor =
+                classColors[Math.floor(Math.random() * classColors.length)];
             for (let i = 0; i < day.length; i += 2) {
+                let ptr;
                 if (day.substring(i, i + 2) === "Mo") {
-                    Monday.push({
-                        time,
-                        code: action.class.code,
-                        location: action.class.room,
-                        className: action.class.className.split(" - ")[0],
-                        color:
-                            classColors[
-                                Math.floor(Math.random() * classColors.length)
-                            ]
-                    });
+                    ptr = Monday;
                 }
                 if (day.substring(i, i + 2) === "Tu") {
-                    Tuesday.push({
-                        time,
-                        code: action.class.code,
-                        location: action.class.room,
-                        className: action.class.className.split(" - ")[0],
-                        color:
-                            classColors[
-                                Math.floor(Math.random() * classColors.length)
-                            ]
-                    });
+                    ptr = Tuesday;
                 }
                 if (day.substring(i, i + 2) === "We") {
-                    Wednesday.push({
-                        time,
-                        code: action.class.code,
-                        location: action.class.room,
-                        className: action.class.className.split(" - ")[0],
-                        color:
-                            classColors[
-                                Math.floor(Math.random() * classColors.length)
-                            ]
-                    });
+                    ptr = Wednesday;
                 }
                 if (day.substring(i, i + 2) === "Th") {
-                    Thursday.push({
-                        time,
-                        code: action.class.code,
-                        location: action.class.room,
-                        className: action.class.className.split(" - ")[0],
-                        color:
-                            classColors[
-                                Math.floor(Math.random() * classColors.length)
-                            ]
-                    });
+                    ptr = Thursday;
                 }
                 if (day.substring(i, i + 2) === "Fr") {
-                    Friday.push({
+                    ptr = Friday;
+                }
+                if (ptr) {
+                    ptr.push({
                         time,
                         code: action.class.code,
                         location: action.class.room,
                         className: action.class.className.split(" - ")[0],
-                        color:
-                            classColors[
-                                Math.floor(Math.random() * classColors.length)
-                            ]
+                        color: randomColor
                     });
                 }
             }
@@ -96,8 +62,8 @@ const classSchedule = (
                 Monday: [...state.Monday, ...Monday],
                 Tuesday: [...state.Tuesday, ...Tuesday],
                 Wednesday: [...state.Wednesday, ...Wednesday],
-                Thursday: [...state.Monday, ...Thursday],
-                Friday: [...state.Monday, ...Friday]
+                Thursday: [...state.Thursday, ...Thursday],
+                Friday: [...state.Friday, ...Friday]
             };
         default:
             return state;
