@@ -98,7 +98,7 @@ class Search extends Component {
                         <div style={{ flex: 3 }}>
                             <input
                                 style={{ width: "30%" }}
-                                class="input is-small"
+                                className="input is-small"
                                 type="text"
                                 value={this.state.courseNumber}
                                 onChange={this.handleCourseNumberChange}
@@ -107,7 +107,7 @@ class Search extends Component {
                     </div>
                 </div>
                 <a
-                    class={
+                    className={
                         "button is-link " +
                         (this.state.isLoading ? "is-loading" : "")
                     }

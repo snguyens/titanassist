@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import "./style.css";
+import { removeClass } from "../../actions";
+import { connect } from "react-redux";
 
-const CELL_HEIGHT_PX = 66;
-const BORDER_WIDTH = 1.3;
+const CELL_HEIGHT_PX = 60;
 
 class Hour extends Component {
     constructor(props) {
@@ -43,13 +44,16 @@ class Hour extends Component {
                         bottom: bottom
                     }}
                     key={index}
+                    onClick={() => this.props.removeClass(_class.code)}
                 >
                     <div className="font">
                         {`${_class.time}`}
                         <br />
                         {`${_class.className}`}
                         <br />
-                        {`${_class.location}`}
+                        {/* {`${_class.location}`} */}
+                        {/* <br /> */}
+                        {`(${_class.code})`}
                     </div>
                 </div>
             );
@@ -67,4 +71,13 @@ class Hour extends Component {
     }
 }
 
-export default Hour;
+function mapDispatchToProps(dispatch) {
+    return {
+        removeClass: code => dispatch(removeClass(code))
+    };
+}
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(Hour);

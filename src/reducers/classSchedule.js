@@ -65,6 +65,32 @@ const classSchedule = (
                 Thursday: [...state.Thursday, ...Thursday],
                 Friday: [...state.Friday, ...Friday]
             };
+        case "REMOVE_CLASS":
+            const days = [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday"
+            ];
+            const newState = {
+                ...state,
+                Monday: [...state.Monday],
+                Tuesday: [...state.Tuesday],
+                Wednesday: [...state.Wednesday],
+                Thursday: [...state.Thursday],
+                Friday: [...state.Friday]
+            };
+            for (const day of days) {
+                for (let i = 0; i < state[day].length; i++) {
+                    if (state[day][i].code === action.code) {
+                        const newArray = state[day].splice();
+                        newArray.splice(i, 1);
+                        newState[day] = newArray;
+                    }
+                }
+            }
+            return newState;
         default:
             return state;
     }

@@ -13,7 +13,7 @@ export default class App extends Component {
                         backgroundColor: "#00376B",
                         color: "white",
                         padding: "5px",
-                        marginBottom: "10px",
+                        marginBottom: "5px",
                         textAlign: "left",
                         fontSize: 15,
                         fontWeight: "bold"
@@ -36,8 +36,8 @@ export default class App extends Component {
                         style={{
                             height: "100vh",
                             overflow: "auto",
-                            minWidth: "550px",
-                            maxWidth: "550px",
+                            minWidth: "575px",
+                            maxWidth: "575px",
                             flexGrow: 1
                         }}
                     >

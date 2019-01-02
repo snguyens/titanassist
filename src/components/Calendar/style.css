@@ -7,8 +7,8 @@ div.columns.header {
     font-family: Tahoma;
     font-size: 18px;
     font-weight: bold;
-    background-color: black;
-    color: white;
+    background-color: orange;
+    color: black;
     text-align: center;
     border: 3px solid black;
 }
@@ -41,6 +41,7 @@ div.column.hourContainer {
     border-left: 0px;
     border-top: 0px;
     padding-bottom: 30px;
+    height: 60px;
 }
 
 div.classContainer {
@@ -57,5 +58,5 @@ div.classContainer {
 
 div.font {
     font-family: Tahoma;
-    font-size: 12px;
+    font-size: 11px;
 }

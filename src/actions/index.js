@@ -16,6 +16,11 @@ export const addClass = details => ({
     class: details
 });
 
+export const removeClass = code => ({
+    type: "REMOVE_CLASS",
+    code
+});
+
 export const searchForClasses = configs => {
     return async function(dispatch) {
         const classSections = await getClassSections(configs);
