@@ -12,9 +12,12 @@ class Hour extends Component {
         };
     }
     renderClasses() {
+        if (!this.props.classes) {
+            return;
+        }
         const classes = [];
         this.props.classes.forEach((_class, index) => {
-            const time = _class.time.split("- ");
+            const time = _class.time.split("-");
             const startTime = time[0].split(":");
             const endTime = time[1].split(":");
             const startHour = parseInt(startTime[0], 10);
@@ -22,7 +25,6 @@ class Hour extends Component {
             let endHour = parseInt(endTime[0], 10);
             endHour = startHour > endHour ? endHour + 12 : endHour;
             const endMinute = parseInt(endTime[1].slice(0, -1), 10);
-            const am_pm = _class.time[_class.time.length - 1];
             const minuteDiff =
                 (endHour * 60 + endMinute - (startHour * 60 + startMinute)) /
                 60;
@@ -45,7 +47,7 @@ class Hour extends Component {
                     <div className="font">
                         {`${_class.time}`}
                         <br />
-                        {`${_class.dept} ${_class.num}`}
+                        {`${_class.className}`}
                         <br />
                         {`${_class.location}`}
                     </div>

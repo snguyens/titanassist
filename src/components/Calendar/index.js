@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Day from "./Day";
 import "./style.css";
+import { connect } from "react-redux";
 
 export const START_HOUR = 6;
 export const END_HOUR = 23;
@@ -41,12 +42,10 @@ class Calendar extends Component {
 
         this.populateCalendar({
             "COMPSCI 116": {
-                time: "9:00- 10:00p",
+                time: "9:00AM - 10:00PM",
                 code: "34150",
-                dept: "COMPSCI",
-                num: "121",
+                className: "CPSC 121",
                 location: "BS3 1200",
-                // title: "SEARCH RETRIEVAL",
                 days: "Mo We Fr"
             }
         });
@@ -73,6 +72,7 @@ class Calendar extends Component {
                     console.log("An error has occurred with the days!");
                 }
             });
+            console.log(this.state.classes);
         });
     }
 
@@ -112,15 +112,28 @@ class Calendar extends Component {
                     <div className="hourHeaders">
                         {this.renderHourHeaders()}
                     </div>
-                    <Day classes={this.state.classes.Monday} />
-                    <Day classes={this.state.classes.Tuesday} />
-                    <Day classes={this.state.classes.Wednesday} />
-                    <Day classes={this.state.classes.Thursday} />
-                    <Day classes={this.state.classes.Friday} />
+                    <Day classes={this.props.Monday} />
+                    <Day classes={this.props.Tuesday} />
+                    <Day classes={this.props.Wednesday} />
+                    <Day classes={this.props.Thursday} />
+                    <Day classes={this.props.Friday} />
                 </div>
             </div>
         );
     }
 }
 
-export default Calendar;
+function mapStateToProps(state) {
+    return {
+        Monday: state.classSchedule.Monday,
+        Tuesday: state.classSchedule.Tuesday,
+        Wednesday: state.classSchedule.Wednesday,
+        Thursday: state.classSchedule.Thursday,
+        Friday: state.classSchedule.Friday
+    };
+}
+
+export default connect(
+    mapStateToProps,
+    null
+)(Calendar);

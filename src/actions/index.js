@@ -11,6 +11,11 @@ export const updateDisplay = display => ({
     display
 });
 
+export const addClass = details => ({
+    type: "ADD_CLASS",
+    class: details
+});
+
 export const searchForClasses = configs => {
     return async function(dispatch) {
         const classSections = await getClassSections(configs);

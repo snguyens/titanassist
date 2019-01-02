@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Table } from "react-bootstrap";
 import { connect } from "react-redux";
+import { addClass } from "../actions";
 
 const defaultProps = {
     classSections: []
@@ -64,37 +65,34 @@ class ClassSections extends Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {details.map(
-                                        ({
-                                            status,
-                                            code, // dates,
-                                            professor,
-                                            room,
-                                            section,
-                                            time
-                                        }) => {
-                                            return (
-                                                <tr
-                                                    style={{
-                                                        fontSize: 12,
-                                                        textAlign: "left"
-                                                    }}
-                                                >
-                                                    <td>
-                                                        {this.renderStatus(
-                                                            status
-                                                        )}
-                                                    </td>
-                                                    <td>{code}</td>
-                                                    {/* <td>{dates}</td> */}
-                                                    <td>{professor}</td>
-                                                    <td>{room}</td>
-                                                    <td>{section}</td>
-                                                    <td>{time}</td>
-                                                </tr>
-                                            );
-                                        }
-                                    )}
+                                    {details.map(detail => {
+                                        return (
+                                            <tr
+                                                style={{
+                                                    fontSize: 12,
+                                                    textAlign: "left"
+                                                }}
+                                                onClick={async () => {
+                                                    await this.props.addClass({
+                                                        ...detail,
+                                                        className
+                                                    });
+                                                }}
+                                            >
+                                                <td>
+                                                    {this.renderStatus(
+                                                        detail.status
+                                                    )}
+                                                </td>
+                                                <td>{detail.code}</td>
+                                                {/* <td>{dates}</td> */}
+                                                <td>{detail.professor}</td>
+                                                <td>{detail.room}</td>
+                                                <td>{detail.section}</td>
+                                                <td>{detail.time}</td>
+                                            </tr>
+                                        );
+                                    })}
                                 </tbody>
                             </Table>
                         </div>
@@ -113,7 +111,13 @@ function mapStateToProps(state) {
     };
 }
 
+function mapDispatchToProps(dispatch) {
+    return {
+        addClass: details => dispatch(addClass(details))
+    };
+}
+
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(ClassSections);
