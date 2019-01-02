@@ -16,7 +16,7 @@ const CLASS_COLORS = [
 
 //This component will receive an object that holds all the classes
 //that a student is currently taking/plan to
-class Calendar2 extends Component {
+class Calendar extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -33,15 +33,15 @@ class Calendar2 extends Component {
 
     componentWillMount() {
         for (let i = CLASS_COLORS.length - 1; i > 0; i--) {
-            let j = Math.floor(Math.random() * (i + 1));
-            let temp = CLASS_COLORS[i];
+            const j = Math.floor(Math.random() * (i + 1));
+            const temp = CLASS_COLORS[i];
             CLASS_COLORS[i] = CLASS_COLORS[j];
             CLASS_COLORS[j] = temp;
         }
 
         this.populateCalendar({
             "COMPSCI 116": {
-                time: "9:00- 2:00p",
+                time: "9:00- 10:00p",
                 code: "34150",
                 dept: "COMPSCI",
                 num: "121",
@@ -50,7 +50,6 @@ class Calendar2 extends Component {
                 days: "Mo We Fr"
             }
         });
-        // this.populateCalendar(this.props.classSchedule);
     }
 
     populateCalendar(classes, color) {
@@ -74,17 +73,11 @@ class Calendar2 extends Component {
                     console.log("An error has occurred with the days!");
                 }
             });
-            if (classes[key]["DIS"]) {
-                this.populateCalendar(
-                    classes[key]["DIS"],
-                    classes[key]["color"]
-                );
-            }
         });
     }
 
     renderHourHeaders() {
-        let hourSlots = [];
+        const hourSlots = [];
         for (let hour = START_HOUR; hour <= END_HOUR; hour++) {
             hourSlots.push(
                 <div className="column timeCell" key={hour}>
@@ -98,15 +91,21 @@ class Calendar2 extends Component {
 
     render() {
         return (
-            <div className="widthContainer" style={{ width: "100%" }}>
+            <div
+                className="widthContainer"
+                style={{
+                    width: "100%",
+                    marginLeft: "15px"
+                }}
+            >
                 <div className="columns is-mobile header">
                     <div className="column is-narrow">
                         <div style={{ width: "50px" }} />
                     </div>
                     <div className="column">Mon</div>
-                    <div className="column">Tues</div>
+                    <div className="column">Tue</div>
                     <div className="column">Wed</div>
-                    <div className="column">Thurs</div>
+                    <div className="column">Thu</div>
                     <div className="column">Fri</div>
                 </div>
                 <div className="columns is-mobile timeContainer">
@@ -124,4 +123,4 @@ class Calendar2 extends Component {
     }
 }
 
-export default Calendar2;
+export default Calendar;

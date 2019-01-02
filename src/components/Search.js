@@ -57,37 +57,41 @@ class Search extends Component {
                         <div style={{ flex: 1 }}>Term:</div>
 
                         <div style={{ flex: 3 }}>
-                            <select
-                                value={this.state.term}
-                                onChange={this.handleTermChange}
-                            >
-                                {Object.keys(termMap).map(term => {
-                                    return (
-                                        <option value={term}>
-                                            {termMap[term]}
-                                        </option>
-                                    );
-                                })}
-                            </select>
+                            <div className="select is-small">
+                                <select
+                                    value={this.state.term}
+                                    onChange={this.handleTermChange}
+                                >
+                                    {Object.keys(termMap).map(term => {
+                                        return (
+                                            <option value={term}>
+                                                {termMap[term]}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div style={{ display: "flex", flexDirection: "row" }}>
                         <div style={{ flex: 1 }}>Subject:</div>
 
                         <div style={{ flex: 3 }}>
-                            <select
-                                value={this.state.subject}
-                                onChange={this.handleSubjectChange}
-                            >
-                                <option />
-                                {Object.keys(subjectMap).map(subject => {
-                                    return (
-                                        <option value={subject}>
-                                            {subjectMap[subject]}
-                                        </option>
-                                    );
-                                })}
-                            </select>
+                            <div className="select is-small">
+                                <select
+                                    value={this.state.subject}
+                                    onChange={this.handleSubjectChange}
+                                >
+                                    <option />
+                                    {Object.keys(subjectMap).map(subject => {
+                                        return (
+                                            <option value={subject}>
+                                                {subjectMap[subject]}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                            </div>
                         </div>
                     </div>
 
@@ -96,6 +100,8 @@ class Search extends Component {
 
                         <div style={{ flex: 3 }}>
                             <input
+                                style={{ width: "30%" }}
+                                class="input is-small"
                                 type="text"
                                 value={this.state.courseNumber}
                                 onChange={this.handleCourseNumberChange}
@@ -103,14 +109,18 @@ class Search extends Component {
                         </div>
                     </div>
                 </div>
-                <Button
-                    bsStyle="primary"
+                <a
+                    class={
+                        "button is-link " +
+                        (this.state.isLoading ? "is-loading" : "")
+                    }
+                    bsStyle=""
                     loading={this.state.isLoading}
                     style={{ marginTop: "50px" }}
                     onClick={this.searchForClasses}
                 >
                     Search
-                </Button>
+                </a>
             </div>
         );
     }

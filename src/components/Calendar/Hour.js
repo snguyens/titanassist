@@ -12,7 +12,7 @@ class Hour extends Component {
         };
     }
     renderClasses() {
-        let classes = [];
+        const classes = [];
         this.props.classes.forEach((_class, index) => {
             const time = _class.time.split("- ");
             const startTime = time[0].split(":");

@@ -39,10 +39,12 @@ class ClassSections extends Component {
                             </div>
 
                             <Table
+                                className="table is-bordered is-hoverable"
                                 bordered
                                 hover
                                 style={{
-                                    marginBottom: 0
+                                    marginBottom: 0,
+                                    width: "100%"
                                 }}
                             >
                                 <thead>

@@ -7,7 +7,7 @@ div.columns.header {
     font-family: Tahoma;
     font-size: 18px;
     font-weight: bold;
-    background-color: #0063a4;
+    background-color: black;
     color: white;
     text-align: center;
     border: 3px solid black;
@@ -28,7 +28,7 @@ div.hourHeaders {
 }
 
 div.column.timeCell {
-    background-color: orange;
+    color: black;
     border: 0.3px solid black;
     border-left: 0;
     border-top: 0;
@@ -41,7 +41,6 @@ div.column.hourContainer {
     border-left: 0px;
     border-top: 0px;
     padding-bottom: 30px;
-    background-color: #eee;
 }
 
 div.classContainer {
