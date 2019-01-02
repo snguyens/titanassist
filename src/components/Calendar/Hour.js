@@ -51,8 +51,6 @@ class Hour extends Component {
                         <br />
                         {`${_class.className}`}
                         <br />
-                        {/* {`${_class.location}`} */}
-                        {/* <br /> */}
                         {`(${_class.code})`}
                     </div>
                 </div>

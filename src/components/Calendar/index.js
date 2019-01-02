@@ -7,20 +7,6 @@ export const START_HOUR = 6;
 export const END_HOUR = 23;
 
 class Calendar extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            classes: {
-                Monday: [],
-                Tuesday: [],
-                Wednesday: [],
-                Thursday: [],
-                Friday: []
-            },
-            colorIndex: 0
-        };
-    }
-
     renderHourHeaders() {
         const hourSlots = [];
         for (let hour = START_HOUR; hour <= END_HOUR; hour++) {
