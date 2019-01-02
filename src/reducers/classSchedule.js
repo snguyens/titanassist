@@ -84,7 +84,7 @@ const classSchedule = (
             for (const day of days) {
                 for (let i = 0; i < state[day].length; i++) {
                     if (state[day][i].code === action.code) {
-                        const newArray = state[day].splice();
+                        const newArray = [...state[day]];
                         newArray.splice(i, 1);
                         newState[day] = newArray;
                     }
