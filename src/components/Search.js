@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Button from "react-bootstrap-button-loader";
 import { subjectMap } from "../constants/subjects";
 import { termMap } from "../constants/terms";
 import { connect } from "react-redux";
