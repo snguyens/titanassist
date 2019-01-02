@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import Calendar from "./components/Calendar";
+import Calendar from "./components/Calendar/";
 import Console from "./components/Console";
 
 export default class App extends Component {

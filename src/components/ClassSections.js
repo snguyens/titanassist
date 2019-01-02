@@ -28,7 +28,7 @@ class ClassSections extends Component {
                             <div
                                 style={{
                                     fontWeight: "bold",
-                                    fontSize: 16,
+                                    fontSize: 15,
                                     textAlign: "center",
                                     backgroundColor: "#00376B",
                                     color: "white",
