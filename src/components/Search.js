@@ -164,7 +164,7 @@ class Search extends Component {
                         </div>
                     </div>
                 </div>
-                <a
+                <button
                     className={
                         "button is-link " +
                         (this.state.isLoading ? "is-loading" : "")
@@ -175,7 +175,7 @@ class Search extends Component {
                     onClick={this.searchForClasses}
                 >
                     Search
-                </a>
+                </button>
             </div>
         );
     }

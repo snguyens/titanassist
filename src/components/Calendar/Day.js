@@ -5,30 +5,6 @@ import { START_HOUR, END_HOUR } from "./index";
 import { connect } from "react-redux";
 
 class Day extends Component {
-    constructor(props) {
-        super(props);
-        // this.myRef = [];
-    }
-
-    // scrollToMyRef = hour => {
-    //     this.myRef.current.scrollIntoView({
-    //         block: "nearest",
-    //         behavior: "smooth",
-    //         inline: "end"
-    //     });
-    // };
-
-    // componentDidUpdate(prevProps) {
-    //     const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-    //     for (const day of days) {
-    //         if (this.props[day].length > prevProps[day].length) {
-    //             const { time } = this.props[day][this.props[day].length - 1];
-    //             const f = time.split(" - ")[0].split(":")[0];
-    //             this.scrollToMyRef(f);
-    //         }
-    //     }
-    // }
-
     renderHourCells(day) {
         const rows = [];
         const classes = {};
