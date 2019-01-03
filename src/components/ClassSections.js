@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Table } from "react-bootstrap";
 import { connect } from "react-redux";
 import { addClass } from "../actions";
 import "./ClassSections.css";
@@ -48,7 +47,7 @@ class ClassSections extends Component {
                                 {className}
                             </div>
 
-                            <Table
+                            <table
                                 className="table is-bordered is-hoverable"
                                 bordered
                                 hover
@@ -104,7 +103,7 @@ class ClassSections extends Component {
                                         );
                                     })}
                                 </tbody>
-                            </Table>
+                            </table>
                         </div>
                     );
                 })}
