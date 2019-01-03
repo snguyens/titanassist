@@ -12,6 +12,7 @@ class Hour extends Component {
             hover: false
         };
     }
+
     renderClasses() {
         if (!this.props.classes) {
             return;
@@ -44,7 +45,9 @@ class Hour extends Component {
                         bottom: bottom
                     }}
                     key={index}
-                    onClick={() => this.props.removeClass(_class.code)}
+                    onClick={() => {
+                        this.props.removeClass(_class.code);
+                    }}
                 >
                     <div className="font">
                         {`${_class.time}`}
