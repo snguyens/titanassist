@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { careerMap } from "../constants/career";
 import { subjectMap } from "../constants/subjects";
 import { termMap } from "../constants/terms";
 import { connect } from "react-redux";
@@ -11,7 +12,8 @@ class Search extends Component {
             isLoading: false,
             subject: "",
             term: 2193,
-            courseNumber: ""
+            courseNumber: "",
+            career: ""
         };
     }
 
@@ -20,7 +22,8 @@ class Search extends Component {
         try {
             await this.props.searchForClasses({
                 subject: this.state.subject,
-                term: this.state.term
+                term: this.state.term,
+                career: this.state.career
             });
         } catch (e) {
             //todo: show error notification/message
@@ -39,6 +42,10 @@ class Search extends Component {
     handleCourseNumberChange = event => {
         this.setState({ courseNumber: event.target.value });
     };
+    handleCareerChange = event => {
+        this.setState({ career: event.target.value });
+        console.log(this.state.career);
+    };
 
     render() {
         return (
@@ -53,7 +60,7 @@ class Search extends Component {
                     <div style={{ display: "flex", flexDirection: "row" }}>
                         <div style={{ flex: 1 }}>Term:</div>
 
-                        <div style={{ flex: 3 }}>
+                        <div style={{ flex: 2 }}>
                             <div className="select is-small">
                                 <select
                                     value={this.state.term}
@@ -73,7 +80,7 @@ class Search extends Component {
                     <div style={{ display: "flex", flexDirection: "row" }}>
                         <div style={{ flex: 1 }}>Subject:</div>
 
-                        <div style={{ flex: 3 }}>
+                        <div style={{ flex: 2 }}>
                             <div className="select is-small">
                                 <select
                                     value={this.state.subject}
@@ -93,16 +100,38 @@ class Search extends Component {
                     </div>
 
                     <div style={{ display: "flex", flexDirection: "row" }}>
-                        <div style={{ flex: 1 }}>Course Number:</div>
+                        <div style={{ flex: 1 }}>Course Number/Range:</div>
 
-                        <div style={{ flex: 3 }}>
+                        <div style={{ flex: 2 }}>
                             <input
-                                style={{ width: "30%" }}
+                                style={{ width: "35%" }}
                                 className="input is-small"
                                 type="text"
                                 value={this.state.courseNumber}
                                 onChange={this.handleCourseNumberChange}
+                                placeholder="300, 200-400, < 200"
                             />
+                        </div>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                        <div style={{ flex: 1 }}>Course Career:</div>
+
+                        <div style={{ flex: 2 }}>
+                            <div className="select is-small">
+                                <select
+                                    value={this.state.career}
+                                    onChange={this.handleCareerChange}
+                                >
+                                    <option>Any</option>>
+                                    {Object.keys(careerMap).map(career => {
+                                        return (
+                                            <option value={career}>
+                                                {careerMap[career]}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
