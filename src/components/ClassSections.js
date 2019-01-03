@@ -82,6 +82,13 @@ class ClassSections extends Component {
                                                     textAlign: "left"
                                                 }}
                                                 onClick={async () => {
+                                                    if (detail.time === "TBA") {
+                                                        window.alert(
+                                                            `Class ${
+                                                                detail.code
+                                                            } currently has no time!`
+                                                        );
+                                                    }
                                                     await this.props.addClass({
                                                         ...detail,
                                                         className

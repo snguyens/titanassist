@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { careerMap } from "../constants/career";
+import { locationMap } from "../constants/location";
 import { subjectMap } from "../constants/subjects";
 import { termMap } from "../constants/terms";
 import { connect } from "react-redux";
@@ -13,7 +14,8 @@ class Search extends Component {
             subject: "",
             term: 2193,
             courseNumber: "",
-            career: ""
+            career: "",
+            location: ""
         };
     }
 
@@ -23,7 +25,8 @@ class Search extends Component {
             await this.props.searchForClasses({
                 subject: this.state.subject,
                 term: this.state.term,
-                career: this.state.career
+                career: this.state.career,
+                location: this.state.location
             });
         } catch (e) {
             //todo: show error notification/message
@@ -42,9 +45,13 @@ class Search extends Component {
     handleCourseNumberChange = event => {
         this.setState({ courseNumber: event.target.value });
     };
+
     handleCareerChange = event => {
         this.setState({ career: event.target.value });
-        console.log(this.state.career);
+    };
+
+    handleLocationChange = event => {
+        this.setState({ location: event.target.value });
     };
 
     render() {
@@ -122,11 +129,33 @@ class Search extends Component {
                                     value={this.state.career}
                                     onChange={this.handleCareerChange}
                                 >
-                                    <option>Any</option>>
+                                    <option>Any</option>
                                     {Object.keys(careerMap).map(career => {
                                         return (
                                             <option value={career}>
                                                 {careerMap[career]}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                        <div style={{ flex: 1 }}>Location:</div>
+
+                        <div style={{ flex: 2 }}>
+                            <div className="select is-small">
+                                <select
+                                    value={this.state.location}
+                                    onChange={this.handleLocationChange}
+                                >
+                                    <option>Any</option>
+                                    {Object.keys(locationMap).map(location => {
+                                        return (
+                                            <option value={location}>
+                                                {locationMap[location]}
                                             </option>
                                         );
                                     })}
