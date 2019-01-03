@@ -20,6 +20,15 @@ const classSchedule = (
 ) => {
     switch (action.type) {
         case "ADD_CLASS":
+            for (const day of Object.keys(state)) {
+                for (const classes of state[day]) {
+                    if (classes.code === action.class.code) {
+                        console.log("You have already added that class!");
+                        return state;
+                    }
+                }
+            }
+
             const Monday = [];
             const Tuesday = [];
             const Wednesday = [];
@@ -82,11 +91,13 @@ const classSchedule = (
                 Friday: [...state.Friday]
             };
             for (const day of days) {
-                for (let i = 0; i < state[day].length; i++) {
-                    if (state[day][i].code === action.code) {
-                        const newArray = [...state[day]];
+                let newArray = state[day];
+                for (let i = 0; i < newArray.length; ) {
+                    if (newArray[i].code === action.code) {
                         newArray.splice(i, 1);
                         newState[day] = newArray;
+                    } else {
+                        i++;
                     }
                 }
             }
