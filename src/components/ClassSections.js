@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Table } from "react-bootstrap";
 import { connect } from "react-redux";
 import { addClass } from "../actions";
+import "./ClassSections.css";
 
 const defaultProps = {
     classSections: []
@@ -10,13 +11,21 @@ const defaultProps = {
 class ClassSections extends Component {
     renderStatus(status) {
         if (status === "OPEN") {
-            return <span style={{ color: "green" }}>OPEN</span>;
+            return (
+                <span style={{ color: "green", fontWeight: "bold" }}>OPEN</span>
+            );
         }
         if (status === "CLOSED") {
-            return <span style={{ color: "red" }}>CLOSED</span>;
+            return (
+                <span style={{ color: "red", fontWeight: "bold" }}>CLOSED</span>
+            );
         }
         if (status === "WAITLIST") {
-            return <span style={{ color: "orange" }}>WAITL</span>;
+            return (
+                <span style={{ color: "orange", fontWeight: "bold" }}>
+                    WAITL
+                </span>
+            );
         }
     }
 
@@ -68,6 +77,7 @@ class ClassSections extends Component {
                                     {details.map(detail => {
                                         return (
                                             <tr
+                                                className="classSection"
                                                 style={{
                                                     fontSize: 12,
                                                     textAlign: "left"
