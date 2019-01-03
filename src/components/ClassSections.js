@@ -37,11 +37,11 @@ class ClassSections extends Component {
                             <div
                                 style={{
                                     fontWeight: "bold",
-                                    fontSize: 15,
+                                    fontSize: 14,
                                     textAlign: "center",
                                     backgroundColor: "#00376B",
                                     color: "white",
-                                    padding: "10px"
+                                    padding: "6px"
                                 }}
                             >
                                 {className}
@@ -59,7 +59,7 @@ class ClassSections extends Component {
                                 <thead>
                                     <tr
                                         style={{
-                                            fontSize: 12,
+                                            fontSize: 11,
                                             backgroundColor: "#D3D3D3",
                                             textAlign: "center"
                                         }}
