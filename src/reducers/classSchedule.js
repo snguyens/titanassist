@@ -1,11 +1,12 @@
 const classColors = [
-    "#deb887",
+    "#3F25A6",
+    "#721C1C",
+    "#A82626",
+    "#065754",
     "#20b2aa",
     "#cd5c5c",
     "#ba55d3",
-    "#4169e1",
-    "#ff6347",
-    "#32cd32"
+    "#4169e1"
 ];
 
 const classSchedule = (
@@ -14,16 +15,23 @@ const classSchedule = (
         Tuesday: [],
         Wednesday: [],
         Thursday: [],
-        Friday: []
+        Friday: [],
+        colorIndex: 0
     },
     action
 ) => {
     switch (action.type) {
         case "ADD_CLASS":
-            for (const day of Object.keys(state)) {
+            for (const day of [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday"
+            ]) {
                 for (const classes of state[day]) {
                     if (classes.code === action.class.code) {
-                        console.log("You have already added that class!");
+                        window.alert("You have already added that class!");
                         return state;
                     }
                 }
@@ -37,8 +45,7 @@ const classSchedule = (
             const splitTime = action.class.time.split(" ");
             const day = splitTime[0];
             const time = splitTime[1] + " - " + splitTime[3];
-            const randomColor =
-                classColors[Math.floor(Math.random() * classColors.length)];
+            const color = classColors[state.colorIndex++];
             for (let i = 0; i < day.length; i += 2) {
                 let ptr;
                 if (day.substring(i, i + 2) === "Mo") {
@@ -62,7 +69,7 @@ const classSchedule = (
                         code: action.class.code,
                         location: action.class.room,
                         className: action.class.className.split(" - ")[0],
-                        color: randomColor
+                        color
                     });
                 }
             }
