@@ -29,30 +29,66 @@ class Search extends Component {
                 location: this.state.location
             });
         } catch (e) {
-            //todo: show error notification/message
+            window.alert(
+                `An error has occurred while trying to search for classes!`
+            );
         }
         this.setState({ isLoading: false });
     };
 
-    handleTermChange = event => {
-        this.setState({ term: event.target.value });
+    handleChange = (state, event) => {
+        this.setState({ [state]: event.target.value });
     };
 
-    handleSubjectChange = event => {
-        this.setState({ subject: event.target.value });
-    };
+    renderDropDown(configs) {
+        const { stateKey, map, header, initialValue } = configs;
+        return (
+            <div style={{ display: "flex", flexDirection: "row" }}>
+                <div style={{ flex: 1 }}>{header}:</div>
 
-    handleCourseNumberChange = event => {
-        this.setState({ courseNumber: event.target.value });
-    };
+                <div style={{ flex: 2 }}>
+                    <div className="select is-small">
+                        <select
+                            value={this.state[stateKey]}
+                            onChange={e => this.handleChange(stateKey, e)}
+                            disabled={this.state.isLoading}
+                        >
+                            {initialValue && <option>{initialValue}</option>}
 
-    handleCareerChange = event => {
-        this.setState({ career: event.target.value });
-    };
+                            {Object.keys(map).map((item, i) => {
+                                return (
+                                    <option value={item} key={i}>
+                                        {map[item]}
+                                    </option>
+                                );
+                            })}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
-    handleLocationChange = event => {
-        this.setState({ location: event.target.value });
-    };
+    renderInputField(configs) {
+        const { stateKey, header, placeholder } = configs;
+        return (
+            <div style={{ display: "flex", flexDirection: "row" }}>
+                <div style={{ flex: 1 }}>{header}:</div>
+
+                <div style={{ flex: 2 }}>
+                    <input
+                        style={{ width: "35%" }}
+                        className="input is-small"
+                        type="text"
+                        value={this.state[stateKey]}
+                        onChange={e => this.handleChange(stateKey, e)}
+                        placeholder={placeholder}
+                        disabled={this.state.isLoading}
+                    />
+                </div>
+            </div>
+        );
+    }
 
     render() {
         return (
@@ -64,122 +100,37 @@ class Search extends Component {
                         textAlign: "left"
                     }}
                 >
-                    <div style={{ display: "flex", flexDirection: "row" }}>
-                        <div style={{ flex: 1 }}>Term:</div>
+                    {this.renderDropDown({
+                        stateKey: "term",
+                        map: termMap,
+                        header: "Term"
+                    })}
+                    {this.renderDropDown({
+                        stateKey: "subject",
+                        map: subjectMap,
+                        header: "Subject",
+                        initialValue: " "
+                    })}
 
-                        <div style={{ flex: 2 }}>
-                            <div className="select is-small">
-                                <select
-                                    value={this.state.term}
-                                    onChange={this.handleTermChange}
-                                    disabled={this.state.isLoading}
-                                >
-                                    {Object.keys(termMap).map((term, i) => {
-                                        return (
-                                            <option value={term} key={i}>
-                                                {termMap[term]}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "row" }}>
-                        <div style={{ flex: 1 }}>Subject:</div>
+                    {this.renderInputField({
+                        stateKey: "courseNumber",
+                        header: "Course Number/Range",
+                        placeholder: "300, 200-400"
+                    })}
 
-                        <div style={{ flex: 2 }}>
-                            <div className="select is-small">
-                                <select
-                                    value={this.state.subject}
-                                    onChange={this.handleSubjectChange}
-                                    disabled={this.state.isLoading}
-                                >
-                                    <option />
-                                    {Object.keys(subjectMap).map(
-                                        (subject, i) => {
-                                            return (
-                                                <option value={subject} key={i}>
-                                                    {subjectMap[subject]}
-                                                </option>
-                                            );
-                                        }
-                                    )}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    {this.renderDropDown({
+                        stateKey: "career",
+                        map: careerMap,
+                        header: "Course Career",
+                        initialValue: "Any"
+                    })}
 
-                    <div style={{ display: "flex", flexDirection: "row" }}>
-                        <div style={{ flex: 1 }}>Course Number/Range:</div>
-
-                        <div style={{ flex: 2 }}>
-                            <input
-                                style={{ width: "35%" }}
-                                className="input is-small"
-                                type="text"
-                                value={this.state.courseNumber}
-                                onChange={this.handleCourseNumberChange}
-                                placeholder="300, 200-400, < 200"
-                                disabled={this.state.isLoading}
-                            />
-                        </div>
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "row" }}>
-                        <div style={{ flex: 1 }}>Course Career:</div>
-
-                        <div style={{ flex: 2 }}>
-                            <div className="select is-small">
-                                <select
-                                    value={this.state.career}
-                                    onChange={this.handleCareerChange}
-                                    disabled={this.state.isLoading}
-                                >
-                                    <option>Any</option>
-                                    {Object.keys(careerMap).map(
-                                        (career, index) => {
-                                            return (
-                                                <option
-                                                    value={career}
-                                                    key={index}
-                                                >
-                                                    {careerMap[career]}
-                                                </option>
-                                            );
-                                        }
-                                    )}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style={{ display: "flex", flexDirection: "row" }}>
-                        <div style={{ flex: 1 }}>Location:</div>
-
-                        <div style={{ flex: 2 }}>
-                            <div className="select is-small">
-                                <select
-                                    value={this.state.location}
-                                    onChange={this.handleLocationChange}
-                                    disabled={this.state.isLoading}
-                                >
-                                    <option>Any</option>
-                                    {Object.keys(locationMap).map(
-                                        (location, i) => {
-                                            return (
-                                                <option
-                                                    value={location}
-                                                    key={i}
-                                                >
-                                                    {locationMap[location]}
-                                                </option>
-                                            );
-                                        }
-                                    )}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    {this.renderDropDown({
+                        stateKey: "location",
+                        map: locationMap,
+                        header: "Location",
+                        initialValue: "Any"
+                    })}
                 </div>
                 <button
                     className={
