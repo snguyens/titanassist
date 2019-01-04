@@ -4,6 +4,12 @@ import Calendar from "./components/Calendar/";
 import Console from "./components/Console";
 
 export default class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            hideConsole: false
+        };
+    }
     render() {
         return (
             <div className="App">
@@ -34,6 +40,20 @@ export default class App extends Component {
                             fontSize: 12
                         }}
                     >
+                        <div
+                            style={{
+                                flex: 1,
+                                whiteSpace: "nowrap",
+                                paddingRight: "20px"
+                            }}
+                            onClick={() => {
+                                this.setState(prevState => ({
+                                    hideConsole: !prevState.hideConsole
+                                }));
+                            }}
+                        >
+                            Hide Search
+                        </div>
                         <div style={{ flex: 1, paddingRight: "20px" }}>
                             About
                         </div>
@@ -52,17 +72,19 @@ export default class App extends Component {
                     >
                         <Calendar />
                     </div>
-                    <div
-                        style={{
-                            height: "100vh",
-                            overflow: "auto",
-                            minWidth: "615px",
-                            maxWidth: "615px",
-                            padding: "15px"
-                        }}
-                    >
-                        <Console />
-                    </div>
+                    {!this.state.hideConsole && (
+                        <div
+                            style={{
+                                height: "100vh",
+                                overflow: "auto",
+                                minWidth: "615px",
+                                maxWidth: "615px",
+                                padding: "15px"
+                            }}
+                        >
+                            <Console />
+                        </div>
+                    )}
                 </div>
             </div>
         );
