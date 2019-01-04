@@ -72,6 +72,7 @@ class Search extends Component {
                                 <select
                                     value={this.state.term}
                                     onChange={this.handleTermChange}
+                                    disabled={this.state.isLoading}
                                 >
                                     {Object.keys(termMap).map(term => {
                                         return (
@@ -92,6 +93,7 @@ class Search extends Component {
                                 <select
                                     value={this.state.subject}
                                     onChange={this.handleSubjectChange}
+                                    disabled={this.state.isLoading}
                                 >
                                     <option />
                                     {Object.keys(subjectMap).map(subject => {
@@ -117,6 +119,7 @@ class Search extends Component {
                                 value={this.state.courseNumber}
                                 onChange={this.handleCourseNumberChange}
                                 placeholder="300, 200-400, < 200"
+                                disabled={this.state.isLoading}
                             />
                         </div>
                     </div>
@@ -128,6 +131,7 @@ class Search extends Component {
                                 <select
                                     value={this.state.career}
                                     onChange={this.handleCareerChange}
+                                    disabled={this.state.isLoading}
                                 >
                                     <option>Any</option>
                                     {Object.keys(careerMap).map(career => {
@@ -150,6 +154,7 @@ class Search extends Component {
                                 <select
                                     value={this.state.location}
                                     onChange={this.handleLocationChange}
+                                    disabled={this.state.isLoading}
                                 >
                                     <option>Any</option>
                                     {Object.keys(locationMap).map(location => {
