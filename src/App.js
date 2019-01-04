@@ -10,6 +10,11 @@ export default class App extends Component {
             hideConsole: false
         };
     }
+    toggleConsole = () => {
+        this.setState(prevState => ({
+            hideConsole: !prevState.hideConsole
+        }));
+    };
     render() {
         return (
             <div className="App">
@@ -46,11 +51,7 @@ export default class App extends Component {
                                 whiteSpace: "nowrap",
                                 paddingRight: "20px"
                             }}
-                            onClick={() => {
-                                this.setState(prevState => ({
-                                    hideConsole: !prevState.hideConsole
-                                }));
-                            }}
+                            onClick={this.toggleConsole}
                         >
                             Hide Search
                         </div>
