@@ -18,12 +18,12 @@ class Day extends Component {
                 _class.time.length - 2,
                 _class.time.length
             );
-            classes[
+            const key =
                 startHour +
-                    (am_pm === "PM" && endHour >= startHour && endHour !== 12
-                        ? 12
-                        : 0)
-            ] = [_class];
+                (am_pm === "PM" && endHour >= startHour && endHour !== 12
+                    ? 12
+                    : 0);
+            classes[key] = classes[key] ? [...classes[key], _class] : [_class];
         });
         for (let hour = START_HOUR; hour <= END_HOUR; hour++) {
             rows.push(<Hour key={hour} classes={classes[hour]} />);
