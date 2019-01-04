@@ -6,17 +6,11 @@ import { connect } from "react-redux";
 const CELL_HEIGHT_PX = 60;
 
 class Hour extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            hover: false
-        };
-    }
+    static defaultProps = {
+        classes: []
+    };
 
     renderClasses() {
-        if (!this.props.classes) {
-            return;
-        }
         const classes = [];
         this.props.classes.forEach((_class, index) => {
             const time = _class.time.split("-");
@@ -33,9 +27,7 @@ class Hour extends Component {
             const top = (startMinute / 60) * CELL_HEIGHT_PX;
             let bottom = minuteDiff * CELL_HEIGHT_PX + top - CELL_HEIGHT_PX; //570 - 420 = 150
             bottom =
-                minuteDiff > 60
-                    ? 0.3 * Math.floor(minuteDiff) * -1
-                    : bottom * -1;
+                minuteDiff > 60 ? 1 * Math.floor(minuteDiff) * -1 : bottom * -1;
             classes.push(
                 <div
                     className="classContainer"

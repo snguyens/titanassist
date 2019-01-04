@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import { addClass } from "../actions";
 import "./ClassSections.css";
 
-const defaultProps = {
-    classSections: []
-};
-
 class ClassSections extends Component {
+    static defaultProps = {
+        classSections: []
+    };
+
     renderStatus(status) {
         if (status === "OPEN") {
             return (
@@ -118,8 +118,6 @@ class ClassSections extends Component {
         );
     }
 }
-
-ClassSections.defaultProps = defaultProps;
 
 function mapStateToProps(state) {
     return {
