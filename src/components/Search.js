@@ -43,7 +43,13 @@ class Search extends Component {
     renderDropDown(configs) {
         const { stateKey, map, header, initialValue } = configs;
         return (
-            <div style={{ display: "flex", flexDirection: "row" }}>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    paddingBottom: "5px"
+                }}
+            >
                 <div style={{ flex: 1 }}>{header}:</div>
 
                 <div style={{ flex: 2 }}>
@@ -72,7 +78,13 @@ class Search extends Component {
     renderInputField(configs) {
         const { stateKey, header, placeholder } = configs;
         return (
-            <div style={{ display: "flex", flexDirection: "row" }}>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    paddingBottom: "5px"
+                }}
+            >
                 <div style={{ flex: 1 }}>{header}:</div>
 
                 <div style={{ flex: 2 }}>

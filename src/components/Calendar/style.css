@@ -1,6 +1,6 @@
 div.widthContainer,
 div.hourCells {
-    width: 50%;
+    width: 97%;
 }
 
 div.columns.header {
@@ -9,7 +9,7 @@ div.columns.header {
     background-color: orange;
     color: black;
     text-align: center;
-    border: 3px solid black;
+    border-bottom: 2px solid black;
 }
 
 div.columns.timeContainer {

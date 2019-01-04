@@ -11,8 +11,10 @@ class Calendar extends Component {
         for (let hour = START_HOUR; hour <= END_HOUR; hour++) {
             hourSlots.push(
                 <div className="column timeCell" key={hour}>
-                    {hour <= 12 ? hour : hour - 12}
-                    {hour >= 12 ? "PM" : "AM"}
+                    <p style={{ textAlign: "right", marginLeft: "5px" }}>
+                        {hour <= 12 ? hour : hour - 12}
+                        {hour >= 12 ? "PM" : "AM"}
+                    </p>
                 </div>
             );
         }
@@ -21,13 +23,7 @@ class Calendar extends Component {
 
     render() {
         return (
-            <div
-                className="widthContainer"
-                style={{
-                    width: "95%",
-                    marginLeft: "15px"
-                }}
-            >
+            <div className="widthContainer">
                 <div
                     className="columns is-mobile header"
                     style={{ height: "40px" }}

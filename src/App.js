@@ -13,18 +13,38 @@ export default class App extends Component {
                         backgroundColor: "#00376B",
                         color: "white",
                         padding: "5px",
-                        marginBottom: "5px",
-                        textAlign: "left",
-                        fontSize: 15,
-                        fontWeight: "bold"
+                        fontWeight: "bold",
+                        display: "flex"
                     }}
                 >
-                    TitanAssist
+                    <div
+                        style={{
+                            flex: 1,
+                            textAlign: "left",
+                            paddingLeft: "10px",
+                            fontSize: 15
+                        }}
+                    >
+                        TitanAssist
+                    </div>
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            fontSize: 12
+                        }}
+                    >
+                        <div style={{ flex: 1, paddingRight: "20px" }}>
+                            About
+                        </div>
+                        <div style={{ flex: 1, paddingRight: "10px" }}>
+                            Suggest
+                        </div>
+                    </div>
                 </div>
                 <div style={{ display: "flex" }}>
                     <div
                         style={{
-                            flex: 1,
                             flexGrow: 1,
                             height: "100vh",
                             overflow: "auto"
@@ -36,9 +56,9 @@ export default class App extends Component {
                         style={{
                             height: "100vh",
                             overflow: "auto",
-                            minWidth: "575px",
-                            maxWidth: "575px",
-                            flexGrow: 1
+                            minWidth: "615px",
+                            maxWidth: "615px",
+                            padding: "15px"
                         }}
                     >
                         <Console />
