@@ -1,13 +1,4 @@
-const classColors = [
-    "#3F25A6",
-    "#721C1C",
-    "#A82626",
-    "#065754",
-    "#20b2aa",
-    "#cd5c5c",
-    "#ba55d3",
-    "#4169e1"
-];
+import classColors from "../constants/classColors";
 
 const classSchedule = (
     state = {
@@ -15,13 +6,18 @@ const classSchedule = (
         Tuesday: [],
         Wednesday: [],
         Thursday: [],
-        Friday: [],
-        colorIndex: 0
+        Friday: []
     },
     action
 ) => {
     switch (action.type) {
         case "ADD_CLASS":
+            let colorIndex = state.colorIndex
+                ? state.colorIndex
+                : Math.floor(Math.random() * classColors.length);
+            if (colorIndex >= classColors.length) {
+                colorIndex = 0;
+            }
             for (const day of [
                 "Monday",
                 "Tuesday",
@@ -42,35 +38,28 @@ const classSchedule = (
             const Wednesday = [];
             const Thursday = [];
             const Friday = [];
+            const dayMap = {
+                Mo: Monday,
+                Tu: Tuesday,
+                We: Wednesday,
+                Th: Thursday,
+                Fr: Friday
+            };
             const splitTime = action.class.time.split(" ");
-            const day = splitTime[0];
-            const time = splitTime[1] + " - " + splitTime[3];
-            const color = classColors[state.colorIndex++];
-            for (let i = 0; i < day.length; i += 2) {
-                let ptr;
-                if (day.substring(i, i + 2) === "Mo") {
-                    ptr = Monday;
-                }
-                if (day.substring(i, i + 2) === "Tu") {
-                    ptr = Tuesday;
-                }
-                if (day.substring(i, i + 2) === "We") {
-                    ptr = Wednesday;
-                }
-                if (day.substring(i, i + 2) === "Th") {
-                    ptr = Thursday;
-                }
-                if (day.substring(i, i + 2) === "Fr") {
-                    ptr = Friday;
-                }
-                if (ptr) {
-                    ptr.push({
-                        time,
-                        code: action.class.code,
-                        location: action.class.room,
-                        className: action.class.className.split(" - ")[0],
-                        color
-                    });
+            const classDays = splitTime[0];
+            const classTime = splitTime[1] + " - " + splitTime[3];
+            const color = classColors[colorIndex++];
+            for (let i = 0; i < classDays.length; i += 2) {
+                for (const day of Object.keys(dayMap)) {
+                    if (classDays.substring(i, i + 2) === day) {
+                        dayMap[day].push({
+                            time: classTime,
+                            code: action.class.code,
+                            location: action.class.room,
+                            className: action.class.className.split(" - ")[0],
+                            color
+                        });
+                    }
                 }
             }
             return {
@@ -79,7 +68,8 @@ const classSchedule = (
                 Tuesday: [...state.Tuesday, ...Tuesday],
                 Wednesday: [...state.Wednesday, ...Wednesday],
                 Thursday: [...state.Thursday, ...Thursday],
-                Friday: [...state.Friday, ...Friday]
+                Friday: [...state.Friday, ...Friday],
+                colorIndex
             };
         case "REMOVE_CLASS":
             const days = [
@@ -108,6 +98,7 @@ const classSchedule = (
                     }
                 }
             }
+            newState[colorIndex] = state.colorIndex - 1;
             return newState;
         default:
             return state;
@@ -115,5 +106,3 @@ const classSchedule = (
 };
 
 export default classSchedule;
-
-//MoWe 11:30AM - 12:45PM
