@@ -38,8 +38,12 @@ class Day extends Component {
             this.props.Wednesday,
             this.props.Thursday,
             this.props.Friday
-        ].map(day => {
-            return <div className="hourCells">{this.renderHourCells(day)}</div>;
+        ].map((day, i) => {
+            return (
+                <div className="hourCells" key={i}>
+                    {this.renderHourCells(day)}
+                </div>
+            );
         });
     }
 }

@@ -35,8 +35,12 @@ class Calendar extends Component {
                     <div className="column is-narrow">
                         <div style={{ width: "45px" }} />
                     </div>
-                    {["Mon", "Tue", "Wed", "Thu", "Fri"].map(day => {
-                        return <div className="column">{day}</div>;
+                    {["Mon", "Tue", "Wed", "Thu", "Fri"].map((day, i) => {
+                        return (
+                            <div className="column" key={i}>
+                                {day}
+                            </div>
+                        );
                     })}
                 </div>
                 <div className="columns is-mobile timeContainer">

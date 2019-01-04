@@ -74,9 +74,9 @@ class Search extends Component {
                                     onChange={this.handleTermChange}
                                     disabled={this.state.isLoading}
                                 >
-                                    {Object.keys(termMap).map(term => {
+                                    {Object.keys(termMap).map((term, i) => {
                                         return (
-                                            <option value={term}>
+                                            <option value={term} key={i}>
                                                 {termMap[term]}
                                             </option>
                                         );
@@ -96,13 +96,15 @@ class Search extends Component {
                                     disabled={this.state.isLoading}
                                 >
                                     <option />
-                                    {Object.keys(subjectMap).map(subject => {
-                                        return (
-                                            <option value={subject}>
-                                                {subjectMap[subject]}
-                                            </option>
-                                        );
-                                    })}
+                                    {Object.keys(subjectMap).map(
+                                        (subject, i) => {
+                                            return (
+                                                <option value={subject} key={i}>
+                                                    {subjectMap[subject]}
+                                                </option>
+                                            );
+                                        }
+                                    )}
                                 </select>
                             </div>
                         </div>
@@ -134,13 +136,18 @@ class Search extends Component {
                                     disabled={this.state.isLoading}
                                 >
                                     <option>Any</option>
-                                    {Object.keys(careerMap).map(career => {
-                                        return (
-                                            <option value={career}>
-                                                {careerMap[career]}
-                                            </option>
-                                        );
-                                    })}
+                                    {Object.keys(careerMap).map(
+                                        (career, index) => {
+                                            return (
+                                                <option
+                                                    value={career}
+                                                    key={index}
+                                                >
+                                                    {careerMap[career]}
+                                                </option>
+                                            );
+                                        }
+                                    )}
                                 </select>
                             </div>
                         </div>
@@ -157,13 +164,18 @@ class Search extends Component {
                                     disabled={this.state.isLoading}
                                 >
                                     <option>Any</option>
-                                    {Object.keys(locationMap).map(location => {
-                                        return (
-                                            <option value={location}>
-                                                {locationMap[location]}
-                                            </option>
-                                        );
-                                    })}
+                                    {Object.keys(locationMap).map(
+                                        (location, i) => {
+                                            return (
+                                                <option
+                                                    value={location}
+                                                    key={i}
+                                                >
+                                                    {locationMap[location]}
+                                                </option>
+                                            );
+                                        }
+                                    )}
                                 </select>
                             </div>
                         </div>
@@ -174,8 +186,7 @@ class Search extends Component {
                         "button is-link " +
                         (this.state.isLoading ? "is-loading" : "")
                     }
-                    bsStyle=""
-                    loading={this.state.isLoading}
+                    loading={this.state.isLoading.toString()}
                     style={{ marginTop: "50px" }}
                     onClick={this.searchForClasses}
                 >
