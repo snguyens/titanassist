@@ -15,7 +15,8 @@ class Search extends Component {
             term: 2193,
             courseNumber: "",
             career: "",
-            location: ""
+            location: "",
+            showOpenClassesOnly: false
         };
     }
 
@@ -26,7 +27,8 @@ class Search extends Component {
                 subject: this.state.subject,
                 term: this.state.term,
                 career: this.state.career,
-                location: this.state.location
+                location: this.state.location,
+                showOpenClassesOnly: this.state.showOpenClassesOnly
             });
         } catch (e) {
             window.alert(
@@ -102,6 +104,36 @@ class Search extends Component {
         );
     }
 
+    renderCheckbox(configs) {
+        const { stateKey, header, placeholder } = configs;
+        return (
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    paddingBottom: "5px"
+                }}
+            >
+                <div style={{ flex: 1 }}>{header}:</div>
+
+                <div style={{ flex: 2 }}>
+                    <label className="checkbox">
+                        <input
+                            type="checkbox"
+                            checked={this.state.showOpenClassesOnly}
+                            onChange={() => {
+                                this.setState(prevState => ({
+                                    showOpenClassesOnly: !prevState.showOpenClassesOnly
+                                }));
+                            }}
+                            disabled={this.state.isLoading}
+                        />
+                    </label>
+                </div>
+            </div>
+        );
+    }
+
     render() {
         return (
             <div>
@@ -142,6 +174,10 @@ class Search extends Component {
                         map: locationMap,
                         header: "Location",
                         initialValue: "Any"
+                    })}
+
+                    {this.renderCheckbox({
+                        header: "Show Open Classes Only"
                     })}
                 </div>
                 <button
