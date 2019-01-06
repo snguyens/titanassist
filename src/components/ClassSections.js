@@ -15,7 +15,7 @@ class ClassSections extends Component {
 
     addClassToCalendar = async (detail, className) => {
         if (detail.time === "TBA") {
-            window.alert(`Class ${detail.code} currently has no time!`);
+            window.alert(`Class ${detail.code} is currently TBA!`);
         }
         await this.props.addClass({
             ...detail,
