@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addClass, updateDisplay } from "../actions";
+import { addClass, updateDisplay, updateClassNumber } from "../actions";
 import { CLASS_INFO } from "../constants/display";
 import "./ClassSections.css";
 
@@ -9,7 +9,8 @@ class ClassSections extends Component {
         classSections: []
     };
 
-    viewClassInfo = () => {
+    viewClassInfo = async classNumber => {
+        await this.props.updateClassNumber(classNumber);
         this.props.updateDisplay(CLASS_INFO);
     };
 
@@ -98,15 +99,16 @@ class ClassSections extends Component {
                                                         fontSize: 12,
                                                         textAlign: "left"
                                                     }}
-                                                    onClick={() =>
-                                                        this.addClassToCalendar(
-                                                            detail,
-                                                            className
-                                                        )
-                                                    }
                                                     key={index}
                                                 >
-                                                    <td>
+                                                    <td
+                                                        onClick={() =>
+                                                            this.addClassToCalendar(
+                                                                detail,
+                                                                className
+                                                            )
+                                                        }
+                                                    >
                                                         {this.renderStatus(
                                                             detail.status
                                                         )}
@@ -119,8 +121,10 @@ class ClassSections extends Component {
                                                         //     );
                                                         //     console.log(res);
                                                         // }}
-                                                        onClick={
-                                                            this.viewClassInfo
+                                                        onClick={() =>
+                                                            this.viewClassInfo(
+                                                                detail.classNumber
+                                                            )
                                                         }
                                                     >
                                                         {detail.code}
@@ -153,7 +157,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         addClass: details => dispatch(addClass(details)),
-        updateDisplay: display => dispatch(updateDisplay(display))
+        updateDisplay: display => dispatch(updateDisplay(display)),
+        updateClassNumber: classNumber =>
+            dispatch(updateClassNumber(classNumber))
     };
 }
 

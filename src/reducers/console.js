@@ -6,6 +6,10 @@ const console = (state = {}, action) => {
             });
         case "UPDATE_DISPLAY":
             return Object.assign({}, state, { display: action.display });
+        case "UPDATE_CLASS_NUMBER":
+            return Object.assign({}, state, {
+                classNumber: action.classNumber
+            });
         default:
             return state;
     }
