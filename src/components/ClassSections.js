@@ -97,7 +97,7 @@ class ClassSections extends Component {
                                     >
                                         <th>Status</th>
                                         <th>Class</th>
-                                        <th>Professor</th>
+                                        <th>Prof.</th>
                                         <th>Room</th>
                                         <th>Section</th>
                                         <th>Time</th>

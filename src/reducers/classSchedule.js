@@ -98,7 +98,7 @@ const classSchedule = (
                     }
                 }
             }
-            newState[colorIndex] = state.colorIndex - 1;
+            newState["colorIndex"] = state.colorIndex - 1;
             return newState;
         default:
             return state;
