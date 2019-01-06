@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addClass, updateDisplay } from "../actions";
-import { SEARCH } from "../constants/display";
-import { getClassInfo } from "../services";
+import { CLASS_INFO } from "../constants/display";
 import "./ClassSections.css";
 
 class ClassSections extends Component {
@@ -10,8 +9,8 @@ class ClassSections extends Component {
         classSections: []
     };
 
-    navigateBack = async () => {
-        await this.props.updateDisplay(SEARCH);
+    viewClassInfo = () => {
+        this.props.updateDisplay(CLASS_INFO);
     };
 
     addClassToCalendar = async (detail, className) => {
@@ -47,108 +46,99 @@ class ClassSections extends Component {
     render() {
         return (
             <div>
-                <div style={{ marginBottom: 34 }}>
-                    <button
-                        className="button is-link"
-                        style={{
-                            position: "fixed",
-                            top: 34,
-                            right: 0,
-                            width: "615px",
-                            borderRadius: 0
-                        }}
-                        onClick={this.navigateBack}
-                    >
-                        Back
-                    </button>
-                </div>
-                {this.props.classSections.map(({ details, className }) => {
-                    return (
-                        <div>
-                            <div
-                                style={{
-                                    fontWeight: "bold",
-                                    fontSize: 14,
-                                    textAlign: "center",
-                                    backgroundColor: "#00376B",
-                                    color: "white",
-                                    padding: "6px"
-                                }}
-                            >
-                                {className}
-                            </div>
+                {this.props.classSections.map(
+                    ({ details, className }, index) => {
+                        return (
+                            <div key={index}>
+                                <div
+                                    style={{
+                                        fontWeight: "bold",
+                                        fontSize: 14,
+                                        textAlign: "center",
+                                        backgroundColor: "#00376B",
+                                        color: "white",
+                                        padding: "6px"
+                                    }}
+                                >
+                                    {className}
+                                </div>
 
-                            <table
-                                className="table is-bordered is-hoverable"
-                                bordered
-                                hover
-                                style={{
-                                    marginBottom: 0,
-                                    width: "100%"
-                                }}
-                            >
-                                <thead>
-                                    <tr
-                                        style={{
-                                            fontSize: 11,
-                                            backgroundColor: "#D3D3D3",
-                                            textAlign: "center"
-                                        }}
-                                    >
-                                        <th>Status</th>
-                                        <th>Class</th>
-                                        <th>Prof.</th>
-                                        <th>Room</th>
-                                        <th>Section</th>
-                                        <th>Time</th>
-                                        <th>Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {details.map((detail, index) => {
-                                        return (
-                                            <tr
-                                                className="classSection"
-                                                style={{
-                                                    fontSize: 12,
-                                                    textAlign: "left"
-                                                }}
-                                                onClick={() =>
-                                                    this.addClassToCalendar(
-                                                        detail,
-                                                        className
-                                                    )
-                                                }
-                                            >
-                                                <td>
-                                                    {this.renderStatus(
-                                                        detail.status
-                                                    )}
-                                                </td>
-                                                <td
-                                                    // style={{ color: "#3366BB" }}
-                                                    onClick={async () => {
-                                                        const res = await getClassInfo(
-                                                            detail.classNumber
-                                                        );
-                                                        console.log(res);
+                                <table
+                                    className="table is-bordered is-hoverable"
+                                    bordered="true"
+                                    hover="true"
+                                    style={{
+                                        marginBottom: 0,
+                                        width: "100%"
+                                    }}
+                                >
+                                    <thead>
+                                        <tr
+                                            style={{
+                                                fontSize: 11,
+                                                backgroundColor: "#D3D3D3",
+                                                textAlign: "center"
+                                            }}
+                                        >
+                                            <th>Status</th>
+                                            <th>Class</th>
+                                            <th>Prof.</th>
+                                            <th>Room</th>
+                                            <th>Section</th>
+                                            <th>Time</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {details.map((detail, index) => {
+                                            return (
+                                                <tr
+                                                    className="classSection"
+                                                    style={{
+                                                        fontSize: 12,
+                                                        textAlign: "left"
                                                     }}
+                                                    onClick={() =>
+                                                        this.addClassToCalendar(
+                                                            detail,
+                                                            className
+                                                        )
+                                                    }
+                                                    key={index}
                                                 >
-                                                    {detail.code}
-                                                </td>
-                                                <td>{detail.professor}</td>
-                                                <td>{detail.room}</td>
-                                                <td>{detail.section}</td>
-                                                <td>{detail.time}</td>
-                                                <td>{detail.dates}</td>
-                                            </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
-                        </div>
-                    );
-                })}
+                                                    <td>
+                                                        {this.renderStatus(
+                                                            detail.status
+                                                        )}
+                                                    </td>
+                                                    <td
+                                                        // style={{ color: "#3366BB" }}
+                                                        // onClick={async () => {
+                                                        //     const res = await getClassInfo(
+                                                        //         detail.classNumber
+                                                        //     );
+                                                        //     console.log(res);
+                                                        // }}
+                                                        onClick={
+                                                            this.viewClassInfo
+                                                        }
+                                                    >
+                                                        {detail.code}
+                                                    </td>
+                                                    <td>{detail.professor}</td>
+                                                    <td>{detail.room}</td>
+                                                    <td>{detail.section}</td>
+                                                    <td>{detail.time}</td>
+                                                    <td>{detail.dates}</td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        );
+                    }
+                )}
             </div>
         );
     }
