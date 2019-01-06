@@ -79,8 +79,7 @@ export default class App extends Component {
                                 height: "100vh",
                                 overflow: "auto",
                                 minWidth: "615px",
-                                maxWidth: "615px",
-                                padding: "15px"
+                                maxWidth: "615px"
                             }}
                         >
                             <Console />

@@ -1,11 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addClass } from "../actions";
+import { addClass, updateDisplay } from "../actions";
+import { SEARCH } from "../constants/display";
 import "./ClassSections.css";
 
 class ClassSections extends Component {
     static defaultProps = {
         classSections: []
+    };
+
+    navigateBack = async () => {
+        await this.props.updateDisplay(SEARCH);
     };
 
     renderStatus(status) {
@@ -31,6 +36,20 @@ class ClassSections extends Component {
     render() {
         return (
             <div>
+                <button
+                    className="button is-link"
+                    style={{
+                        position: "fixed",
+                        top: 34,
+                        right: 0,
+                        width: "615px",
+                        borderRadius: 0
+                    }}
+                    onClick={this.navigateBack}
+                >
+                    Back
+                </button>
+                <div style={{ marginBottom: 34 }} />
                 {this.props.classSections.map(({ details, className }) => {
                     return (
                         <div>
@@ -127,7 +146,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        addClass: details => dispatch(addClass(details))
+        addClass: details => dispatch(addClass(details)),
+        updateDisplay: display => dispatch(updateDisplay(display))
     };
 }
 
