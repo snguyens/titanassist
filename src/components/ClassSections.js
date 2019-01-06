@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addClass, updateDisplay } from "../actions";
 import { SEARCH } from "../constants/display";
+import { getClassInfo } from "../services";
 import "./ClassSections.css";
 
 class ClassSections extends Component {
@@ -11,6 +12,16 @@ class ClassSections extends Component {
 
     navigateBack = async () => {
         await this.props.updateDisplay(SEARCH);
+    };
+
+    addClassToCalendar = async (detail, className) => {
+        if (detail.time === "TBA") {
+            window.alert(`Class ${detail.code} currently has no time!`);
+        }
+        await this.props.addClass({
+            ...detail,
+            className
+        });
     };
 
     renderStatus(status) {
@@ -36,20 +47,21 @@ class ClassSections extends Component {
     render() {
         return (
             <div>
-                <button
-                    className="button is-link"
-                    style={{
-                        position: "fixed",
-                        top: 34,
-                        right: 0,
-                        width: "615px",
-                        borderRadius: 0
-                    }}
-                    onClick={this.navigateBack}
-                >
-                    Back
-                </button>
-                <div style={{ marginBottom: 34 }} />
+                <div style={{ marginBottom: 34 }}>
+                    <button
+                        className="button is-link"
+                        style={{
+                            position: "fixed",
+                            top: 34,
+                            right: 0,
+                            width: "615px",
+                            borderRadius: 0
+                        }}
+                        onClick={this.navigateBack}
+                    >
+                        Back
+                    </button>
+                </div>
                 {this.props.classSections.map(({ details, className }) => {
                     return (
                         <div>
@@ -84,15 +96,16 @@ class ClassSections extends Component {
                                         }}
                                     >
                                         <th>Status</th>
-                                        <th>Code</th>
+                                        <th>Class</th>
                                         <th>Professor</th>
                                         <th>Room</th>
                                         <th>Section</th>
                                         <th>Time</th>
+                                        <th>Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {details.map(detail => {
+                                    {details.map((detail, index) => {
                                         return (
                                             <tr
                                                 className="classSection"
@@ -100,31 +113,34 @@ class ClassSections extends Component {
                                                     fontSize: 12,
                                                     textAlign: "left"
                                                 }}
-                                                onClick={async () => {
-                                                    if (detail.time === "TBA") {
-                                                        window.alert(
-                                                            `Class ${
-                                                                detail.code
-                                                            } currently has no time!`
-                                                        );
-                                                    }
-                                                    await this.props.addClass({
-                                                        ...detail,
+                                                onClick={() =>
+                                                    this.addClassToCalendar(
+                                                        detail,
                                                         className
-                                                    });
-                                                }}
+                                                    )
+                                                }
                                             >
                                                 <td>
                                                     {this.renderStatus(
                                                         detail.status
                                                     )}
                                                 </td>
-                                                <td>{detail.code}</td>
-                                                {/* <td>{dates}</td> */}
+                                                <td
+                                                    // style={{ color: "#3366BB" }}
+                                                    onClick={async () => {
+                                                        const res = await getClassInfo(
+                                                            detail.classNumber
+                                                        );
+                                                        console.log(res);
+                                                    }}
+                                                >
+                                                    {detail.code}
+                                                </td>
                                                 <td>{detail.professor}</td>
                                                 <td>{detail.room}</td>
                                                 <td>{detail.section}</td>
                                                 <td>{detail.time}</td>
+                                                <td>{detail.dates}</td>
                                             </tr>
                                         );
                                     })}

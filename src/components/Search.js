@@ -105,7 +105,7 @@ class Search extends Component {
     }
 
     renderCheckbox(configs) {
-        const { stateKey, header, placeholder } = configs;
+        const { header } = configs;
         return (
             <div
                 style={{
