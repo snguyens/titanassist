@@ -23,8 +23,16 @@ export const removeClass = code => ({
 
 export const searchForClasses = configs => {
     return async function(dispatch) {
-        const classSections = await getClassSections(configs);
-        dispatch(updateClassSections(classSections));
-        dispatch(updateDisplay(CLASS_SECTIONS));
+        try {
+            const classSections = await getClassSections(configs);
+            dispatch(updateClassSections(classSections));
+            dispatch(updateDisplay(CLASS_SECTIONS));
+        } catch (e) {
+            if (e.response.data === "over300sections") {
+                window.alert(
+                    "The search will exceed the maximum limit of 300 sections. Please refine your search"
+                );
+            }
+        }
     };
 };
