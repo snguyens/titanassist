@@ -12,8 +12,8 @@ class Hour extends Component {
 
     renderClasses() {
         const classes = [];
-        this.props.classes.forEach((_class, index) => {
-            const time = _class.time.split("-");
+        this.props.classes.forEach((currClass, index) => {
+            const time = currClass.time.split("-");
             const startTime = time[0].split(":");
             const endTime = time[1].split(":");
             const startHour = parseInt(startTime[0], 10);
@@ -28,25 +28,33 @@ class Hour extends Component {
             let bottom = minuteDiff * CELL_HEIGHT_PX + top - CELL_HEIGHT_PX; //570 - 420 = 150
             bottom =
                 minuteDiff > 60 ? 1 * Math.floor(minuteDiff) * -1 : bottom * -1;
+
+            //Handles size changing if there are multiple classes that fall within the same time
+            const style = {
+                backgroundColor: currClass.color,
+                top: top,
+                bottom: bottom
+            };
+            if (currClass.cell.totalSize > 1) {
+                style.width = `${100 / currClass.cell.totalSize}%`;
+                style.left = `${(100 / currClass.cell.totalSize) * index}%`;
+            }
+
             classes.push(
                 <div
                     className="classContainer"
-                    style={{
-                        backgroundColor: _class.color,
-                        top: top,
-                        bottom: bottom
-                    }}
+                    style={style}
                     key={index}
                     onClick={() => {
-                        this.props.removeClass(_class.code);
+                        this.props.removeClass(currClass.code);
                     }}
                 >
                     <div className="font">
-                        {`${_class.time}`}
+                        {`${currClass.time}`}
                         <br />
-                        {`${_class.className}`}
+                        {`${currClass.className}`}
                         <br />
-                        {`(${_class.code})`}
+                        {`(${currClass.code})`}
                     </div>
                 </div>
             );
@@ -56,10 +64,7 @@ class Hour extends Component {
 
     render() {
         return (
-            <div className="column hourContainer">
-                {this.renderClasses()}
-                &nbsp;
-            </div>
+            <div className="column hourContainer">{this.renderClasses()}</div>
         );
     }
 }
