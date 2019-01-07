@@ -6,17 +6,15 @@ const classSchedule = (
         Tuesday: [],
         Wednesday: [],
         Thursday: [],
-        Friday: []
+        Friday: [],
+        colorIndex: Math.floor(Math.random() * classColors.length)
     },
     action
 ) => {
     switch (action.type) {
         case "ADD_CLASS":
-            let colorIndex = state.colorIndex
-                ? state.colorIndex
-                : Math.floor(Math.random() * classColors.length);
-            if (colorIndex >= classColors.length) {
-                colorIndex = 0;
+            if (state.colorIndex >= classColors.length) {
+                state.colorIndex = 0;
             }
             for (const day of [
                 "Monday",
@@ -48,7 +46,7 @@ const classSchedule = (
             const splitTime = action.class.time.split(" ");
             const classDays = splitTime[0];
             const classTime = splitTime[1] + " - " + splitTime[3];
-            const color = classColors[colorIndex++];
+            const color = classColors[state.colorIndex++];
             for (let i = 0; i < classDays.length; i += 2) {
                 for (const day of Object.keys(dayMap)) {
                     if (classDays.substring(i, i + 2) === day) {
@@ -68,8 +66,7 @@ const classSchedule = (
                 Tuesday: [...state.Tuesday, ...Tuesday],
                 Wednesday: [...state.Wednesday, ...Wednesday],
                 Thursday: [...state.Thursday, ...Thursday],
-                Friday: [...state.Friday, ...Friday],
-                colorIndex
+                Friday: [...state.Friday, ...Friday]
             };
         case "REMOVE_CLASS":
             const days = [

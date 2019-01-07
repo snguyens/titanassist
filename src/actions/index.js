@@ -21,6 +21,11 @@ export const removeClass = code => ({
     code
 });
 
+export const updateClassNumber = classNumber => ({
+    type: "UPDATE_CLASS_NUMBER",
+    classNumber
+});
+
 export const searchForClasses = configs => {
     return async function(dispatch) {
         try {

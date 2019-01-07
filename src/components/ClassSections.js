@@ -24,6 +24,12 @@ class ClassSections extends Component {
         });
     };
 
+    openRMP = pkId => {
+        window.open(
+            `http://www.ratemyprofessors.com/ShowRatings.jsp?tid=${pkId}`
+        );
+    };
+
     renderStatus(status) {
         if (status === "OPEN") {
             return (
@@ -129,7 +135,38 @@ class ClassSections extends Component {
                                                     >
                                                         {detail.code}
                                                     </td>
-                                                    <td>{detail.professor}</td>
+                                                    {detail.professor
+                                                        .details ? (
+                                                        <td
+                                                            style={{
+                                                                color: "#3366BB"
+                                                            }}
+                                                            onClick={() =>
+                                                                this.openRMP(
+                                                                    detail
+                                                                        .professor
+                                                                        .details
+                                                                        .pkId
+                                                                )
+                                                            }
+                                                        >
+                                                            {`${
+                                                                detail.professor
+                                                                    .name
+                                                            } [${
+                                                                detail.professor
+                                                                    .details
+                                                                    .averageRating
+                                                            }]`}
+                                                        </td>
+                                                    ) : (
+                                                        <td>
+                                                            {
+                                                                detail.professor
+                                                                    .name
+                                                            }
+                                                        </td>
+                                                    )}
                                                     <td>{detail.room}</td>
                                                     <td>{detail.section}</td>
                                                     <td>{detail.time}</td>
