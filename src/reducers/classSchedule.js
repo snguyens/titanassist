@@ -13,9 +13,6 @@ const classSchedule = (
 ) => {
     switch (action.type) {
         case "ADD_CLASS":
-            if (state.colorIndex >= classColors.length) {
-                state.colorIndex = 0;
-            }
             for (const day of [
                 "Monday",
                 "Tuesday",
@@ -29,6 +26,10 @@ const classSchedule = (
                         return state;
                     }
                 }
+            }
+
+            if (state.colorIndex >= classColors.length) {
+                state.colorIndex = 0;
             }
 
             const Monday = [];
@@ -95,7 +96,10 @@ const classSchedule = (
                     }
                 }
             }
-            newState["colorIndex"] = state.colorIndex - 1;
+            newState.colorIndex =
+                state.colorIndex - 1 >= 0
+                    ? state.colorIndex - 1
+                    : classColors.length - 1;
             return newState;
         default:
             return state;
