@@ -13,41 +13,60 @@ class Day extends Component {
         //Represents the class information that will be passed into the Hour component
         const classMap = {};
 
-        //Used to keep track of which nodes have been visited when determining classes that fall within the same time range
-        const visitedMap = {};
-
         //Map used to determine how to divide classes that fall within the same time range
         const sizeMap = {};
 
         for (let i = 0; i < classes.length; i++) {
-            if (visitedMap[classes[i].code]) continue;
             const totalTimes = [
                 { time: classes[i].time.split(" - "), code: classes[i].code }
             ];
+            const localVisitedMap = {};
             for (let j = 0; j < classes.length; j++) {
-                if (i === j || visitedMap[classes[j].code]) continue;
+                if (i === j || localVisitedMap[classes[j].code]) continue;
                 const childTime = classes[j].time.split(" - ");
                 for (const { time } of totalTimes) {
+                    //we skip if:
+                    //the start date === end date of another class
+                    //the end date === start date of another class
                     if (
-                        (moment(childTime[0], "h:mma") <
-                            moment(time[1], "h:mma") &&
-                            moment(childTime[0], "h:mma") >
-                                moment(time[0], "h:mma")) ||
-                        (moment(childTime[1], "h:mma") >
+                        moment(childTime[0], "h:mma").isSame(
+                            moment(time[1], "h:mma")
+                        ) ||
+                        moment(childTime[1], "h:mma").isSame(
+                            moment(time[0], "h:mma")
+                        )
+                    ) {
+                        continue;
+                    }
+
+                    if (
+                        (moment(childTime[0], "h:mma") <=
                             moment(time[0], "h:mma") &&
-                            moment(childTime[1], "h:mma") <
-                                moment(time[1], "h:mma"))
+                            moment(childTime[1], "h:mma") >=
+                                moment(time[1], "h:mma")) ||
+                        (moment(childTime[0], "h:mma") >=
+                            moment(time[0], "h:mma") &&
+                            moment(childTime[1], "h:mma") <=
+                                moment(time[1], "h:mma")) ||
+                        ((moment(childTime[0], "h:mma") <=
+                            moment(time[1], "h:mma") &&
+                            moment(childTime[0], "h:mma") >=
+                                moment(time[0], "h:mma")) ||
+                            (moment(childTime[1], "h:mma") >=
+                                moment(time[0], "h:mma") &&
+                                moment(childTime[1], "h:mma") <=
+                                    moment(time[1], "h:mma")))
                     ) {
                         totalTimes.push({
                             time: childTime,
                             code: classes[j].code
                         });
-                        visitedMap[classes[j].code] = true;
+                        localVisitedMap[classes[j].code] = true;
+                        j = 0;
                         break;
                     }
                 }
             }
-            visitedMap[classes[i].code] = true;
             for (let i = 0; i < totalTimes.length; i++) {
                 const { code } = totalTimes[i];
                 sizeMap[code] = {

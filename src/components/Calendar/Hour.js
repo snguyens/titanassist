@@ -37,7 +37,8 @@ class Hour extends Component {
             };
             if (currClass.cell.totalSize > 1) {
                 style.width = `${100 / currClass.cell.totalSize}%`;
-                style.left = `${(100 / currClass.cell.totalSize) * index}%`;
+                style.left = `${(100 / currClass.cell.totalSize) *
+                    currClass.cell.index}%`;
             }
 
             classes.push(
