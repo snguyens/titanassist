@@ -13,23 +13,22 @@ const classSchedule = (
 ) => {
     switch (action.type) {
         case "ADD_CLASS":
-            for (const day of [
+            const currentClasses = [
                 "Monday",
                 "Tuesday",
                 "Wednesday",
                 "Thursday",
                 "Friday"
-            ]) {
-                for (const classes of state[day]) {
-                    if (classes.code === action.class.code) {
-                        window.alert("You have already added that class!");
-                        return state;
-                    }
+            ].reduce((acc, curr) => {
+                for (const { code } of state[curr]) {
+                    acc.add(code);
                 }
-            }
+                return acc;
+            }, new Set());
 
-            if (state.colorIndex >= classColors.length) {
-                state.colorIndex = 0;
+            if (currentClasses.has(action.class.code)) {
+                window.alert("You have already added that class!");
+                return state;
             }
 
             const Monday = [];
@@ -37,6 +36,7 @@ const classSchedule = (
             const Wednesday = [];
             const Thursday = [];
             const Friday = [];
+
             const dayMap = {
                 Mo: Monday,
                 Tu: Tuesday,
@@ -44,10 +44,17 @@ const classSchedule = (
                 Th: Thursday,
                 Fr: Friday
             };
+
+            const colorIndex =
+                state.colorIndex >= classColors.length ? 0 : state.colorIndex;
+
+            //action.class.time example: ["TuTh", "8:30AM", "-", "9:45AM"]
             const splitTime = action.class.time.split(" ");
             const classDays = splitTime[0];
             const classTime = splitTime[1] + " - " + splitTime[3];
-            const color = classColors[state.colorIndex++];
+
+            const color = classColors[colorIndex];
+
             for (let i = 0; i < classDays.length; i += 2) {
                 for (const day of Object.keys(dayMap)) {
                     if (classDays.substring(i, i + 2) === day) {
@@ -62,14 +69,25 @@ const classSchedule = (
                 }
             }
             return {
-                ...state,
                 Monday: [...state.Monday, ...Monday],
                 Tuesday: [...state.Tuesday, ...Tuesday],
                 Wednesday: [...state.Wednesday, ...Wednesday],
                 Thursday: [...state.Thursday, ...Thursday],
-                Friday: [...state.Friday, ...Friday]
+                Friday: [...state.Friday, ...Friday],
+                colorIndex: colorIndex + 1
             };
         case "REMOVE_CLASS":
+            const newState = {
+                Monday: [...state.Monday],
+                Tuesday: [...state.Tuesday],
+                Wednesday: [...state.Wednesday],
+                Thursday: [...state.Thursday],
+                Friday: [...state.Friday],
+                colorIndex:
+                    state.colorIndex - 1 >= 0
+                        ? state.colorIndex - 1
+                        : classColors.length - 1
+            };
             const days = [
                 "Monday",
                 "Tuesday",
@@ -77,16 +95,8 @@ const classSchedule = (
                 "Thursday",
                 "Friday"
             ];
-            const newState = {
-                ...state,
-                Monday: [...state.Monday],
-                Tuesday: [...state.Tuesday],
-                Wednesday: [...state.Wednesday],
-                Thursday: [...state.Thursday],
-                Friday: [...state.Friday]
-            };
             for (const day of days) {
-                let newArray = state[day];
+                const newArray = state[day];
                 for (let i = 0; i < newArray.length; ) {
                     if (newArray[i].code === action.code) {
                         newArray.splice(i, 1);
@@ -96,10 +106,7 @@ const classSchedule = (
                     }
                 }
             }
-            newState.colorIndex =
-                state.colorIndex - 1 >= 0
-                    ? state.colorIndex - 1
-                    : classColors.length - 1;
+
             return newState;
         default:
             return state;

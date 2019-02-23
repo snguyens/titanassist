@@ -39,6 +39,7 @@ class Day extends Component {
                         continue;
                     }
 
+                    //TODO: refactor this beast
                     if (
                         (moment(childTime[0], "h:mma") <=
                             moment(time[0], "h:mma") &&
@@ -67,13 +68,12 @@ class Day extends Component {
                     }
                 }
             }
-            for (let i = 0; i < totalTimes.length; i++) {
-                const { code } = totalTimes[i];
+            totalTimes.forEach(({ code }, i) => {
                 sizeMap[code] = {
                     index: i,
                     totalSize: totalTimes.length
                 };
-            }
+            });
         }
 
         classes.forEach(currClass => {
