@@ -33,7 +33,7 @@ export const searchForClasses = configs => {
             dispatch(updateClassSections(classSections));
             dispatch(updateDisplay(CLASS_SECTIONS));
         } catch (e) {
-            if (e.response.data === "over300sections") {
+            if (e.response.status === 409) {
                 window.alert(
                     "The search will exceed the maximum limit of 300 sections. Please refine your search"
                 );
