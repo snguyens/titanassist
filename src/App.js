@@ -58,9 +58,6 @@ export default class App extends Component {
                         <div style={{ flex: 1, paddingRight: "20px" }}>
                             About
                         </div>
-                        <div style={{ flex: 1, paddingRight: "10px" }}>
-                            Suggest
-                        </div>
                     </div>
                 </div>
                 <div style={{ display: "flex" }}>
