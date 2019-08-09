@@ -30,8 +30,14 @@
         "not op_mini all"
     ],
     "devDependencies": {
+        "@types/react": "^16.9.0",
+        "@types/react-dom": "^16.8.5",
+        "@types/react-redux": "^7.1.1",
+        "awesome-typescript-loader": "^5.2.1",
         "bulma": "^0.7.2",
         "node-sass": "^4.11.0",
-        "redux-devtools": "^3.5.0"
+        "redux-devtools": "^3.5.0",
+        "source-map-loader": "^0.2.4",
+        "typescript": "^3.5.3"
     }
 }
