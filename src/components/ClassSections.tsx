@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { addClass, updateDisplay, updateClassNumber } from "../actions";
 import { CLASS_INFO } from "../constants/display";
@@ -37,23 +37,35 @@ function ClassSections(props: Props) {
     }
 
     function renderStatus(status: Status) {
-        if (status === "OPEN") {
-            return (
-                <span style={{ color: "green", fontWeight: "bold" }}>OPEN</span>
-            );
+        const statusMap: {
+            [status: string]: { color: string; text: string };
+        } = {
+            OPEN: {
+                color: "green",
+                text: "OPEN"
+            },
+            CLOSED: {
+                color: "red",
+                text: "CLOSED"
+            },
+            WAITLIST: {
+                color: "orange",
+                text: "WAITL"
+            }
+        };
+
+        const statusProperties = statusMap[status];
+
+        //If status is not in the map, don't render anything
+        if (!statusProperties) {
+            return;
         }
-        if (status === "CLOSED") {
-            return (
-                <span style={{ color: "red", fontWeight: "bold" }}>CLOSED</span>
-            );
-        }
-        if (status === "WAITLIST") {
-            return (
-                <span style={{ color: "orange", fontWeight: "bold" }}>
-                    WAITL
-                </span>
-            );
-        }
+
+        return (
+            <span style={{ color: statusProperties.color, fontWeight: "bold" }}>
+                {statusProperties.text}
+            </span>
+        );
     }
 
     return (
