@@ -4,34 +4,39 @@ import { addClass, updateDisplay, updateClassNumber } from "../actions";
 import { CLASS_INFO } from "../constants/display";
 import "./ClassSections.css";
 
-class ClassSections extends Component {
-    static defaultProps = {
-        classSections: []
-    };
+interface Props {
+    updateClassNumber: any;
+    updateDisplay: any;
+    addClass: any;
+    classSections: any;
+}
 
-    viewClassInfo = async classNumber => {
-        await this.props.updateClassNumber(classNumber);
-        this.props.updateDisplay(CLASS_INFO);
-    };
+type Status = "OPEN" | "CLOSED" | "WAITLIST";
 
-    addClassToCalendar = async (detail, className) => {
+function ClassSections(props: Props) {
+    function viewClassInfo(classNumber: number) {
+        props.updateClassNumber(classNumber);
+        props.updateDisplay(CLASS_INFO);
+    }
+
+    function addClassToCalendar(detail: any, className: any) {
         if (detail.time === "TBA") {
             window.alert(`Class ${detail.code} is currently TBA!`);
             return;
         }
-        await this.props.addClass({
+        props.addClass({
             ...detail,
             className
         });
-    };
+    }
 
-    openRMP = pkId => {
+    function openRMP(pkId: any) {
         window.open(
             `http://www.ratemyprofessors.com/ShowRatings.jsp?tid=${pkId}`
         );
-    };
+    }
 
-    renderStatus(status) {
+    function renderStatus(status: Status) {
         if (status === "OPEN") {
             return (
                 <span style={{ color: "green", fontWeight: "bold" }}>OPEN</span>
@@ -51,54 +56,52 @@ class ClassSections extends Component {
         }
     }
 
-    render() {
-        return (
-            <div>
-                {this.props.classSections.map(
-                    ({ details, className }, index) => {
-                        return (
-                            <div key={index}>
-                                <div
-                                    style={{
-                                        fontWeight: "bold",
-                                        fontSize: 14,
-                                        textAlign: "center",
-                                        backgroundColor: "#00376B",
-                                        color: "white",
-                                        padding: "6px"
-                                    }}
-                                >
-                                    {className}
-                                </div>
+    return (
+        <div>
+            {props.classSections.map(
+                ({ details, className }: any, index: number) => {
+                    return (
+                        <div key={index}>
+                            <div
+                                style={{
+                                    fontWeight: "bold",
+                                    fontSize: 14,
+                                    textAlign: "center",
+                                    backgroundColor: "#00376B",
+                                    color: "white",
+                                    padding: "6px"
+                                }}
+                            >
+                                {className}
+                            </div>
 
-                                <table
-                                    className="table is-bordered is-hoverable"
-                                    bordered="true"
-                                    hover="true"
-                                    style={{
-                                        marginBottom: 0,
-                                        width: "100%"
-                                    }}
-                                >
-                                    <thead>
-                                        <tr
-                                            style={{
-                                                fontSize: 11,
-                                                backgroundColor: "#D3D3D3",
-                                                textAlign: "center"
-                                            }}
-                                        >
-                                            <th>Status</th>
-                                            <th>Class</th>
-                                            <th>Prof.</th>
-                                            <th>Room</th>
-                                            <th>Section</th>
-                                            <th>Time</th>
-                                            <th>Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {details.map((detail, index) => {
+                            <table
+                                className="table is-bordered is-hoverable"
+                                style={{
+                                    marginBottom: 0,
+                                    width: "100%"
+                                }}
+                            >
+                                <thead>
+                                    <tr
+                                        style={{
+                                            fontSize: 11,
+                                            backgroundColor: "#D3D3D3",
+                                            textAlign: "center"
+                                        }}
+                                    >
+                                        <th>Status</th>
+                                        <th>Class</th>
+                                        <th>Prof.</th>
+                                        <th>Room</th>
+                                        <th>Section</th>
+                                        <th>Time</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {details.map(
+                                        (detail: any, index: number) => {
                                             return (
                                                 <tr
                                                     className="classSection"
@@ -110,26 +113,19 @@ class ClassSections extends Component {
                                                 >
                                                     <td
                                                         onClick={() =>
-                                                            this.addClassToCalendar(
+                                                            addClassToCalendar(
                                                                 detail,
                                                                 className
                                                             )
                                                         }
                                                     >
-                                                        {this.renderStatus(
+                                                        {renderStatus(
                                                             detail.status
                                                         )}
                                                     </td>
                                                     <td
-                                                        // style={{ color: "#3366BB" }}
-                                                        // onClick={async () => {
-                                                        //     const res = await getClassInfo(
-                                                        //         detail.classNumber
-                                                        //     );
-                                                        //     console.log(res);
-                                                        // }}
                                                         onClick={() =>
-                                                            this.viewClassInfo(
+                                                            viewClassInfo(
                                                                 detail.classNumber
                                                             )
                                                         }
@@ -143,7 +139,7 @@ class ClassSections extends Component {
                                                                 color: "#3366BB"
                                                             }}
                                                             onClick={() =>
-                                                                this.openRMP(
+                                                                openRMP(
                                                                     detail
                                                                         .professor
                                                                         .details
@@ -174,29 +170,29 @@ class ClassSections extends Component {
                                                     <td>{detail.dates}</td>
                                                 </tr>
                                             );
-                                        })}
-                                    </tbody>
-                                </table>
-                            </div>
-                        );
-                    }
-                )}
-            </div>
-        );
-    }
+                                        }
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    );
+                }
+            )}
+        </div>
+    );
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
     return {
         classSections: state.console ? state.console.classSections : []
     };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: any) {
     return {
-        addClass: details => dispatch(addClass(details)),
-        updateDisplay: display => dispatch(updateDisplay(display)),
-        updateClassNumber: classNumber =>
+        addClass: (details: any) => dispatch(addClass(details)),
+        updateDisplay: (display: any) => dispatch(updateDisplay(display)),
+        updateClassNumber: (classNumber: any) =>
             dispatch(updateClassNumber(classNumber))
     };
 }
