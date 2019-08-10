@@ -6,8 +6,48 @@ import { termMap } from "../constants/terms";
 import { connect } from "react-redux";
 import { searchForClasses } from "../actions";
 
-class Search extends Component {
-    constructor(props) {
+interface Props {
+    searchForClasses: any;
+}
+
+interface State {
+    isLoading: boolean;
+    subject: string;
+    term: number;
+    courseNumber: string;
+    career: string;
+    location: string;
+    showOpenClassesOnly: boolean;
+    [x: string]: any;
+}
+
+interface DropDownConfigs {
+    stateKey: "term" | "subject" | "career" | "location";
+    map: any;
+    header: string;
+    initialValue?: string;
+}
+
+interface InputFieldConfigs {
+    stateKey: "courseNumber";
+    header: string;
+    placeholder: string;
+}
+
+interface CheckBoxConfigs {
+    header: string;
+}
+
+interface SearchForClasses {
+    subject: string;
+    term: number;
+    career: string;
+    location: string;
+    showOpenClassesOnly: boolean;
+}
+
+class Search extends Component<Props, State> {
+    constructor(props: Props) {
         super(props);
         this.state = {
             isLoading: false,
@@ -38,11 +78,11 @@ class Search extends Component {
         this.setState({ isLoading: false });
     };
 
-    handleChange = (state, event) => {
+    handleChange = (state: any, event: any) => {
         this.setState({ [state]: event.target.value });
     };
 
-    renderDropDown(configs) {
+    renderDropDown(configs: DropDownConfigs) {
         const { stateKey, map, header, initialValue } = configs;
         return (
             <div
@@ -77,7 +117,7 @@ class Search extends Component {
         );
     }
 
-    renderInputField(configs) {
+    renderInputField(configs: InputFieldConfigs) {
         const { stateKey, header, placeholder } = configs;
         return (
             <div
@@ -104,7 +144,7 @@ class Search extends Component {
         );
     }
 
-    renderCheckbox(configs) {
+    renderCheckbox(configs: CheckBoxConfigs) {
         const { header } = configs;
         return (
             <div
@@ -185,7 +225,6 @@ class Search extends Component {
                         "button is-link " +
                         (this.state.isLoading ? "is-loading" : "")
                     }
-                    loading={this.state.isLoading.toString()}
                     style={{ marginTop: "50px" }}
                     onClick={this.searchForClasses}
                 >
@@ -196,9 +235,10 @@ class Search extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: any) {
     return {
-        searchForClasses: configs => dispatch(searchForClasses(configs))
+        searchForClasses: (configs: SearchForClasses) =>
+            dispatch(searchForClasses(configs))
     };
 }
 
