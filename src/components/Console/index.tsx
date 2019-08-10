@@ -2,9 +2,9 @@ import React from "react";
 import Search from "./Search";
 import ClassInfo from "./ClassInfo";
 import ClassSections from "./ClassSections";
-import { SEARCH, CLASS_INFO, CLASS_SECTIONS } from "../constants/display";
+import { SEARCH, CLASS_INFO, CLASS_SECTIONS } from "../../constants/display";
 import { connect } from "react-redux";
-import { addClass, updateDisplay } from "../actions";
+import { addClass, updateDisplay } from "../../actions";
 
 interface Props {
     display: string;

@@ -5,7 +5,13 @@ import { START_HOUR, END_HOUR } from "./index";
 import { connect } from "react-redux";
 import moment from "moment";
 
-function Day(props: any) {
+function Day(props: {
+    Monday: any;
+    Tuesday: any;
+    Wednesday: any;
+    Thursday: any;
+    Friday: any;
+}) {
     function renderHourCells(classes: any) {
         //All the Hour components that are going to be rendered for a particular day
         const rows: any = [];
@@ -104,19 +110,21 @@ function Day(props: any) {
         return rows;
     }
 
-    return [
+    const hourCells: any = [
         props.Monday,
         props.Tuesday,
         props.Wednesday,
         props.Thursday,
         props.Friday
-    ].map((classes, i) => {
+    ].map((classes: any, i: number) => {
         return (
             <div className="hourCells" key={i}>
                 {renderHourCells(classes)}
             </div>
         );
     });
+
+    return hourCells;
 }
 
 function mapStateToProps(state: any) {

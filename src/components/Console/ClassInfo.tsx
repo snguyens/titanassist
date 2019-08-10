@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getClassInfo } from "../services";
+import { getClassInfo } from "../../services";
 
 interface Props {
     classNumber: number;

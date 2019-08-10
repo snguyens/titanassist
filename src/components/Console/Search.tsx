@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { careerMap } from "../constants/career";
-import { locationMap } from "../constants/location";
-import { subjectMap } from "../constants/subjects";
-import { termMap } from "../constants/terms";
+import { careerMap } from "../../constants/career";
+import { locationMap } from "../../constants/location";
+import { subjectMap } from "../../constants/subjects";
+import { termMap } from "../../constants/terms";
 import { connect } from "react-redux";
-import { searchForClasses } from "../actions";
+import { searchForClasses } from "../../actions";
 
 interface Props {
     searchForClasses: any;

@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addClass, updateDisplay, updateClassNumber } from "../actions";
-import { CLASS_INFO } from "../constants/display";
+import { addClass, updateDisplay, updateClassNumber } from "../../actions";
+import { CLASS_INFO } from "../../constants/display";
 import "./ClassSections.css";
 
 interface Props {
