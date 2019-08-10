@@ -1,6 +1,6 @@
 import { api } from "./apiConfig";
 
-export const getClassInfo = async classNumber => {
+export const getClassInfo = async (classNumber: number) => {
     const { data } = await api.get("/classInfo", {
         params: {
             classNumber,
@@ -11,7 +11,7 @@ export const getClassInfo = async classNumber => {
     return data;
 };
 
-export const getClassSections = async configs => {
+export const getClassSections = async (configs: any) => {
     async function apiRequest() {
         const { data } = await api.get("/classSections", {
             params: {
