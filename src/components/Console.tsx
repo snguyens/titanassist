@@ -55,7 +55,7 @@ function Console(props: Props) {
             return routes[props.display].component;
         }
 
-        return routes[SEARCH].component;
+        return routes[Object.keys(routes)[0]].component;
     }
 
     function renderBackButton() {

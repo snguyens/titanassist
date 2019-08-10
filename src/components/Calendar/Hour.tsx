@@ -5,15 +5,33 @@ import { connect } from "react-redux";
 
 const CELL_HEIGHT_PX = 60;
 
-class Hour extends Component {
-    static defaultProps = {
-        classes: []
-    };
+interface Style {
+    backgroundColor: string;
+    top: number;
+    bottom: number;
+    width?: string;
+    left?: string;
+}
 
-    renderClasses() {
-        const classes = [];
-        this.props.classes.forEach((currClass, index) => {
-            const time = currClass.time.split("-");
+interface Props {
+    classes: {
+        color: string;
+        cell: {
+            index: number;
+            totalSize: number;
+        };
+        time: string;
+        className: string;
+        code: string;
+    }[];
+    removeClass: (x: string) => {};
+}
+
+function Hour(props: Props) {
+    function renderClasses() {
+        const classes: JSX.Element[] = [];
+        props.classes.forEach((currentClass, index) => {
+            const time = currentClass.time.split("-");
             const startTime = time[0].split(":");
             const endTime = time[1].split(":");
             const startHour = parseInt(startTime[0], 10);
@@ -30,15 +48,15 @@ class Hour extends Component {
                 minuteDiff > 60 ? 1 * Math.floor(minuteDiff) * -1 : bottom * -1;
 
             //Handles size changing if there are multiple classes that fall within the same time
-            const style = {
-                backgroundColor: currClass.color,
+            const style: Style = {
+                backgroundColor: currentClass.color,
                 top: top,
                 bottom: bottom
             };
-            if (currClass.cell.totalSize > 1) {
-                style.width = `${100 / currClass.cell.totalSize}%`;
-                style.left = `${(100 / currClass.cell.totalSize) *
-                    currClass.cell.index}%`;
+            if (currentClass.cell.totalSize > 1) {
+                style.width = `${100 / currentClass.cell.totalSize}%`;
+                style.left = `${(100 / currentClass.cell.totalSize) *
+                    currentClass.cell.index}%`;
             }
 
             classes.push(
@@ -47,15 +65,15 @@ class Hour extends Component {
                     style={style}
                     key={index}
                     onClick={() => {
-                        this.props.removeClass(currClass.code);
+                        props.removeClass(currentClass.code);
                     }}
                 >
                     <div className="font">
-                        {`${currClass.time}`}
+                        {`${currentClass.time}`}
                         <br />
-                        {`${currClass.className}`}
+                        {`${currentClass.className}`}
                         <br />
-                        {`(${currClass.code})`}
+                        {`(${currentClass.code})`}
                     </div>
                 </div>
             );
@@ -63,16 +81,16 @@ class Hour extends Component {
         return classes;
     }
 
-    render() {
-        return (
-            <div className="column hourContainer">{this.renderClasses()}</div>
-        );
-    }
+    return <div className="column hourContainer">{renderClasses()}</div>;
 }
 
-function mapDispatchToProps(dispatch) {
+Hour.defaultProps = {
+    classes: []
+};
+
+function mapDispatchToProps(dispatch: any) {
     return {
-        removeClass: code => dispatch(removeClass(code))
+        removeClass: (code: string) => dispatch(removeClass(code))
     };
 }
 

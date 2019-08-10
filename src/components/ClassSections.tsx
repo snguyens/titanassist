@@ -20,10 +20,12 @@ function ClassSections(props: Props) {
     }
 
     function addClassToCalendar(detail: any, className: any) {
+        //Some classes might not have their times yet, prevent the user from adding those classes.
         if (detail.time === "TBA") {
-            window.alert(`Class ${detail.code} is currently TBA!`);
+            window.alert(`The time for class ${detail.code} is currently TBA!`);
             return;
         }
+
         props.addClass({
             ...detail,
             className
