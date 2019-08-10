@@ -5,22 +5,22 @@ import { START_HOUR, END_HOUR } from "./index";
 import { connect } from "react-redux";
 import moment from "moment";
 
-class Day extends Component {
-    renderHourCells(classes) {
+function Day(props: any) {
+    function renderHourCells(classes: any) {
         //All the Hour components that are going to be rendered for a particular day
-        const rows = [];
+        const rows: any = [];
 
         //Represents the class information that will be passed into the Hour component
-        const classMap = {};
+        const classMap: any = {};
 
         //Map used to determine how to divide classes that fall within the same time range
-        const sizeMap = {};
+        const sizeMap: any = {};
 
         for (let i = 0; i < classes.length; i++) {
             const totalTimes = [
                 { time: classes[i].time.split(" - "), code: classes[i].code }
             ];
-            const localVisitedMap = {};
+            const localVisitedMap: any = {};
             for (let j = 0; j < classes.length; j++) {
                 if (i === j || localVisitedMap[classes[j].code]) continue;
                 const childTime = classes[j].time.split(" - ");
@@ -76,7 +76,7 @@ class Day extends Component {
             });
         }
 
-        classes.forEach(currClass => {
+        classes.forEach((currClass: any) => {
             if (sizeMap[currClass.code]) {
                 currClass.cell = sizeMap[currClass.code];
             }
@@ -104,24 +104,22 @@ class Day extends Component {
         return rows;
     }
 
-    render() {
-        return [
-            this.props.Monday,
-            this.props.Tuesday,
-            this.props.Wednesday,
-            this.props.Thursday,
-            this.props.Friday
-        ].map((classes, i) => {
-            return (
-                <div className="hourCells" key={i}>
-                    {this.renderHourCells(classes)}
-                </div>
-            );
-        });
-    }
+    return [
+        props.Monday,
+        props.Tuesday,
+        props.Wednesday,
+        props.Thursday,
+        props.Friday
+    ].map((classes, i) => {
+        return (
+            <div className="hourCells" key={i}>
+                {renderHourCells(classes)}
+            </div>
+        );
+    });
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
     return {
         Monday: state.classSchedule.Monday,
         Tuesday: state.classSchedule.Tuesday,
