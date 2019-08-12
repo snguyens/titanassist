@@ -32,24 +32,7 @@ const routes: {
 };
 
 function Console(props: Props) {
-    const navigateBackwards = () => {
-        //Generate an array of route names
-        const routeNames: string[] = Object.keys(routes);
-
-        //Find the index in the array where the route name matches with prop.display.
-        const index: number =
-            routeNames.findIndex(routeName => routeName === props.display) - 1;
-
-        //Check to make sure index is within bounds.
-        if (index < 0 || index > routeNames.length - 1) {
-            return;
-        }
-
-        //Update the display to show the new route
-        props.updateDisplay(routeNames[index]);
-    };
-
-    //Renders the right portion of the application. The user can search classes, view class info, etc...
+    //Renders the right-hand portion of the application. The user can search classes, view class info, etc...
     function renderConsole() {
         if (routes[props.display]) {
             return routes[props.display].component;
@@ -63,6 +46,24 @@ function Console(props: Props) {
         if (!routes[props.display] || !routes[props.display].renderBackButton) {
             return;
         }
+
+        const navigateBackwards = () => {
+            //Generate an array of route names
+            const routeNames: string[] = Object.keys(routes);
+
+            //Find the index in the array where the route name matches with prop.display.
+            const index: number =
+                routeNames.findIndex(routeName => routeName === props.display) -
+                1;
+
+            //Check to make sure index is within bounds.
+            if (index < 0 || index > routeNames.length - 1) {
+                return;
+            }
+
+            //Update the display to show the new route
+            props.updateDisplay(routeNames[index]);
+        };
 
         //TODO: get rid of inline styling
         return (
