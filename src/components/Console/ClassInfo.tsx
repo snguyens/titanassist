@@ -59,7 +59,6 @@ class ClassInfo extends Component<Props, State> {
                     <div>Notes: {this.state.notes}</div>
                     <div>Description: {this.state.description}</div>
                 </div>
-                )}
             </div>
         );
     }
