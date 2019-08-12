@@ -32,7 +32,7 @@ const routes: {
 };
 
 function Console(props: Props) {
-    const changeView = () => {
+    const navigateBackwards = () => {
         //Generate an array of route names
         const routeNames: string[] = Object.keys(routes);
 
@@ -76,7 +76,7 @@ function Console(props: Props) {
                         width: "615px",
                         borderRadius: 0
                     }}
-                    onClick={changeView}
+                    onClick={navigateBackwards}
                 >
                     Back
                 </button>
