@@ -1,4 +1,4 @@
-export const locationMap = {
+export const locationMap: { [location: string]: string } = {
     FULLERTON: "Fullerton Campus",
     GGC: "Garden Grove Center",
     HS: "High School",

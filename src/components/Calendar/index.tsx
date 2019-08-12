@@ -7,13 +7,18 @@ export const END_HOUR = 23;
 
 class Calendar extends Component {
     renderHourHeaders() {
-        const hourSlots = [];
+        const hourSlots: JSX.Element[] = [];
         for (let hour = START_HOUR; hour <= END_HOUR; hour++) {
+            //Once the time passes 12pm, we need to subtract 12 hours
+            const currentHour = hour <= 12 ? hour : hour - 12;
+
+            const meridiem = hour >= 12 ? "PM" : "AM";
+
             hourSlots.push(
                 <div className="column timeCell" key={hour}>
                     <p style={{ textAlign: "right", marginLeft: "5px" }}>
-                        {hour <= 12 ? hour : hour - 12}
-                        {hour >= 12 ? "PM" : "AM"}
+                        {currentHour}
+                        {meridiem}
                     </p>
                 </div>
             );
@@ -22,6 +27,9 @@ class Calendar extends Component {
     }
 
     render() {
+        //Header text to render on top of the component. TODO: add Sat/Sun support
+        const headers = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+
         return (
             <div className="widthContainer">
                 <div
@@ -31,7 +39,7 @@ class Calendar extends Component {
                     <div className="column is-narrow">
                         <div style={{ width: "45px" }} />
                     </div>
-                    {["Mon", "Tue", "Wed", "Thu", "Fri"].map((day, i) => {
+                    {headers.map((day, i) => {
                         return (
                             <div className="column" key={i}>
                                 {day}

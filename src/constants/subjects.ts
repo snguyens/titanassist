@@ -1,5 +1,5 @@
 //Future: automatically pull these constants
-export const subjectMap = {
+export const subjectMap: { [location: string]: string } = {
     ACCT: "Accounting",
     AFAM: "African American Studies",
     AMST: "American Studies",
