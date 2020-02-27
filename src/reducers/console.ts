@@ -1,4 +1,4 @@
-const console = (state = {}, action) => {
+const console = (state = {}, action: any) => {
   switch (action.type) {
     case "UPDATE_CLASS_SECTIONS":
       return Object.assign({}, state, {

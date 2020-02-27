@@ -1,7 +1,7 @@
 import classColors from "../constants/classColors";
 
 const classSchedule = (
-  state = {
+  state: any = {
     Monday: [],
     Tuesday: [],
     Wednesday: [],
@@ -9,7 +9,7 @@ const classSchedule = (
     Friday: [],
     colorIndex: Math.floor(Math.random() * classColors.length)
   },
-  action
+  action: any
 ) => {
   switch (action.type) {
     case "ADD_CLASS":
@@ -31,13 +31,13 @@ const classSchedule = (
         return state;
       }
 
-      const Monday = [];
-      const Tuesday = [];
-      const Wednesday = [];
-      const Thursday = [];
-      const Friday = [];
+      const Monday: any = [];
+      const Tuesday: any = [];
+      const Wednesday: any = [];
+      const Thursday: any = [];
+      const Friday: any = [];
 
-      const dayMap = {
+      const dayMap: any = {
         Mo: Monday,
         Tu: Tuesday,
         We: Wednesday,
@@ -77,7 +77,7 @@ const classSchedule = (
         colorIndex: colorIndex + 1
       };
     case "REMOVE_CLASS":
-      const newState = {
+      const newState: any = {
         Monday: [...state.Monday],
         Tuesday: [...state.Tuesday],
         Wednesday: [...state.Wednesday],
