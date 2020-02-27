@@ -1,7 +1,7 @@
 //Future: automatically pull these constants
 export const termMap: { [x: number]: string } = {
-    2193: "Spring 2019",
-    2191: "Winter 2019",
-    2187: "Fall 2018",
-    2185: "Summer 2018"
+  2193: "Spring 2019",
+  2191: "Winter 2019",
+  2187: "Fall 2018",
+  2185: "Summer 2018"
 };
