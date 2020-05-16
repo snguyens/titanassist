@@ -4,6 +4,8 @@ import "./style.css";
 
 export const START_HOUR = 6;
 export const END_HOUR = 23;
+//Header text to render on top of the component. TODO: add Sat/Sun support
+const headers = ["Mon", "Tue", "Wed", "Thu", "Fri"];
 
 const Calendar = () => {
   const renderHourHeaders = () => {
@@ -25,9 +27,6 @@ const Calendar = () => {
     }
     return hourSlots;
   };
-
-  //Header text to render on top of the component. TODO: add Sat/Sun support
-  const headers = ["Mon", "Tue", "Wed", "Thu", "Fri"];
 
   return (
     <div className="widthContainer">

@@ -14,12 +14,12 @@ interface Props {
 type Status = "OPEN" | "CLOSED" | "WAITLIST";
 
 const ClassSections = (props: Props) => {
-  function viewClassInfo(classNumber: number) {
+  const viewClassInfo = (classNumber: number) => {
     props.updateClassNumber(classNumber);
     props.updateDisplay(CLASS_INFO);
-  }
+  };
 
-  function addClassToCalendar(detail: any, className: any) {
+  const addClassToCalendar = (detail: any, className: any) => {
     //Some classes might not have their times yet, prevent the user from adding those classes.
     if (detail.time === "TBA") {
       window.alert(`The time for class ${detail.code} is currently TBA!`);
@@ -30,13 +30,13 @@ const ClassSections = (props: Props) => {
       ...detail,
       className
     });
-  }
+  };
 
-  function openRMP(pkId: any) {
+  const openRMP = (pkId: any) => {
     window.open(`http://www.ratemyprofessors.com/ShowRatings.jsp?tid=${pkId}`);
-  }
+  };
 
-  function renderStatus(status: Status) {
+  const renderStatus = (status: Status) => {
     const statusMap: {
       [status: string]: { color: string; text: string };
     } = {
@@ -66,7 +66,7 @@ const ClassSections = (props: Props) => {
         {statusProperties.text}
       </span>
     );
-  }
+  };
 
   return (
     <div>

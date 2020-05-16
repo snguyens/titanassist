@@ -12,7 +12,7 @@ const Day = (props: {
   Thursday: any;
   Friday: any;
 }) => {
-  function renderHourCells(classes: any) {
+  const renderHourCells = (classes: any) => {
     //All the Hour components that are going to be rendered for a particular day
     const rows: any = [];
 
@@ -94,7 +94,7 @@ const Day = (props: {
       rows.push(<Hour key={hour} classes={classMap[hour]} />);
     }
     return rows;
-  }
+  };
 
   const hourCells: any = [
     props.Monday,

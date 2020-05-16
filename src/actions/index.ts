@@ -38,6 +38,7 @@ export const searchForClasses = (configs: any) => {
           "The search will exceed the maximum limit of 300 sections. Please refine your search"
         );
       }
+      window.alert("An unexpected error has occurred!");
     }
   };
 };
