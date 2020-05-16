@@ -9,8 +9,8 @@ const Main = () => {
     toggleHideConsole(!hideConsole);
   };
 
-  return (
-    <div style={styles.container}>
+  const Header = () => {
+    return (
       <div style={styles.header}>
         <div style={styles.title}>TitanAssist</div>
         <div style={styles.leftContainer}>
@@ -20,6 +20,12 @@ const Main = () => {
           <div style={styles.about}>About</div>
         </div>
       </div>
+    );
+  };
+
+  return (
+    <div style={styles.container}>
+      <Header />
       <div style={{ display: "flex" }}>
         <div
           style={{

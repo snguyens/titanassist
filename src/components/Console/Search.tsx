@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Dispatch, SetStateAction, useState } from "react";
 import { careerMap } from "../../constants/career";
 import { locationMap } from "../../constants/location";
 import { subjectMap } from "../../constants/subjects";
@@ -6,30 +6,17 @@ import { termMap } from "../../constants/terms";
 import { connect } from "react-redux";
 import { searchForClasses } from "../../actions";
 
-interface Props {
-  searchForClasses: any;
-}
-
-interface State {
-  isLoading: boolean;
-  subject: string;
-  term: number;
-  courseNumber: string;
-  career: string;
-  location: string;
-  showOpenClassesOnly: boolean;
-  [x: string]: any;
-}
-
 interface DropDownConfigs {
-  stateKey: "term" | "subject" | "career" | "location";
+  state: any;
+  setter: Dispatch<SetStateAction<any>>;
   map: any;
   header: string;
   initialValue?: string;
 }
 
 interface InputFieldConfigs {
-  stateKey: "courseNumber";
+  state: any;
+  setter: Dispatch<SetStateAction<any>>;
   header: string;
   placeholder: string;
 }
@@ -46,42 +33,33 @@ interface SearchForClasses {
   showOpenClassesOnly: boolean;
 }
 
-class Search extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      isLoading: false,
-      subject: "",
-      term: 2193,
-      courseNumber: "",
-      career: "",
-      location: "",
-      showOpenClassesOnly: false
-    };
-  }
+const Search = ({ searchForClasses }: { searchForClasses: any }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [subject, setSubject] = useState("");
+  const [term, setTerm] = useState(2193);
+  const [courseNumber, setCourseNumber] = useState("");
+  const [career, setCareer] = useState("");
+  const [location, setLocation] = useState("");
+  const [showOpenClassesOnly, setShowOpenClassesOnly] = useState(false);
 
-  searchForClasses = async () => {
-    this.setState({ isLoading: true });
+  const handleSearchForClasses = async () => {
+    setIsLoading(true);
     try {
-      await this.props.searchForClasses({
-        subject: this.state.subject,
-        term: this.state.term,
-        career: this.state.career,
-        location: this.state.location,
-        showOpenClassesOnly: this.state.showOpenClassesOnly
+      await searchForClasses({
+        subject,
+        term,
+        career,
+        location,
+        showOpenClassesOnly
       });
     } catch (e) {
       window.alert(`An error has occurred while trying to search for classes!`);
     }
-    this.setState({ isLoading: false });
+    setIsLoading(false);
   };
 
-  handleChange = (state: any, event: any) => {
-    this.setState({ [state]: event.target.value });
-  };
-
-  renderDropDown(configs: DropDownConfigs) {
-    const { stateKey, map, header, initialValue } = configs;
+  const renderDropDown = (configs: DropDownConfigs) => {
+    const { state, setter, map, header, initialValue } = configs;
     return (
       <div
         style={{
@@ -95,9 +73,9 @@ class Search extends Component<Props, State> {
         <div style={{ flex: 2 }}>
           <div className="select is-small">
             <select
-              value={this.state[stateKey]}
-              onChange={e => this.handleChange(stateKey, e)}
-              disabled={this.state.isLoading}
+              value={state}
+              onChange={(e) => setter(e.target.value)}
+              disabled={isLoading}
             >
               {initialValue && <option>{initialValue}</option>}
 
@@ -113,10 +91,10 @@ class Search extends Component<Props, State> {
         </div>
       </div>
     );
-  }
+  };
 
-  renderInputField(configs: InputFieldConfigs) {
-    const { stateKey, header, placeholder } = configs;
+  const renderInputField = (configs: InputFieldConfigs) => {
+    const { state, setter, header, placeholder } = configs;
     return (
       <div
         style={{
@@ -132,17 +110,17 @@ class Search extends Component<Props, State> {
             style={{ width: "35%" }}
             className="input is-small"
             type="text"
-            value={this.state[stateKey]}
-            onChange={e => this.handleChange(stateKey, e)}
+            value={state}
+            onChange={(e) => setter(e)}
             placeholder={placeholder}
-            disabled={this.state.isLoading}
+            disabled={isLoading}
           />
         </div>
       </div>
     );
-  }
+  };
 
-  renderCheckbox(configs: CheckBoxConfigs) {
+  const renderCheckbox = (configs: CheckBoxConfigs) => {
     const { header } = configs;
     return (
       <div
@@ -158,79 +136,76 @@ class Search extends Component<Props, State> {
           <label className="checkbox">
             <input
               type="checkbox"
-              checked={this.state.showOpenClassesOnly}
-              onChange={() => {
-                this.setState(prevState => ({
-                  showOpenClassesOnly: !prevState.showOpenClassesOnly
-                }));
-              }}
-              disabled={this.state.isLoading}
+              checked={showOpenClassesOnly}
+              onChange={() => setShowOpenClassesOnly(!showOpenClassesOnly)}
+              disabled={isLoading}
             />
           </label>
         </div>
       </div>
     );
-  }
+  };
 
-  render() {
-    return (
-      <div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            textAlign: "left"
-          }}
-        >
-          {this.renderDropDown({
-            stateKey: "term",
-            map: termMap,
-            header: "Term"
-          })}
-          {this.renderDropDown({
-            stateKey: "subject",
-            map: subjectMap,
-            header: "Subject",
-            initialValue: " "
-          })}
+  return (
+    <div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          textAlign: "left"
+        }}
+      >
+        {renderDropDown({
+          state: term,
+          setter: setTerm,
+          map: termMap,
+          header: "Term"
+        })}
+        {renderDropDown({
+          state: subject,
+          setter: setSubject,
+          map: subjectMap,
+          header: "Subject",
+          initialValue: " "
+        })}
 
-          {this.renderInputField({
-            stateKey: "courseNumber",
-            header: "Course Number/Range",
-            placeholder: "300, 200-400"
-          })}
+        {renderInputField({
+          state: courseNumber,
+          setter: setCourseNumber,
+          header: "Course Number/Range",
+          placeholder: "300, 200-400"
+        })}
 
-          {this.renderDropDown({
-            stateKey: "career",
-            map: careerMap,
-            header: "Course Career",
-            initialValue: "Any"
-          })}
+        {renderDropDown({
+          state: career,
+          setter: setCareer,
+          map: careerMap,
+          header: "Course Career",
+          initialValue: "Any"
+        })}
 
-          {this.renderDropDown({
-            stateKey: "location",
-            map: locationMap,
-            header: "Location",
-            initialValue: "Any"
-          })}
+        {renderDropDown({
+          state: location,
+          setter: setLocation,
+          map: locationMap,
+          header: "Location",
+          initialValue: "Any"
+        })}
 
-          {this.renderCheckbox({
-            header: "Show Open Classes Only"
-          })}
-        </div>
-        <button
-          className={
-            "button is-link " + (this.state.isLoading ? "is-loading" : "")
-          }
-          style={{ marginTop: "50px" }}
-          onClick={this.searchForClasses}
-        >
-          Search
-        </button>
+        {renderCheckbox({
+          header: "Show Open Classes Only"
+        })}
       </div>
-    );
-  }
-}
+      <button
+        className={"button is-link " + (isLoading ? "is-loading" : "")}
+        style={{ marginTop: "50px" }}
+        onClick={handleSearchForClasses}
+      >
+        Search
+      </button>
+    </div>
+  );
+};
 
 function mapDispatchToProps(dispatch: any) {
   return {
@@ -239,4 +214,7 @@ function mapDispatchToProps(dispatch: any) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(Search);
+export default connect(
+  null,
+  mapDispatchToProps
+)(Search);

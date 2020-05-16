@@ -1,11 +1,7 @@
 import React from "react";
 import Day from "./Day";
 import "./style.css";
-
-export const START_HOUR = 6;
-export const END_HOUR = 23;
-//Header text to render on top of the component. TODO: add Sat/Sun support
-const headers = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+import { START_HOUR, END_HOUR, DAYS } from "../../configs/calendar";
 
 const Calendar = () => {
   const renderHourHeaders = () => {
@@ -34,7 +30,7 @@ const Calendar = () => {
         <div className="column is-narrow">
           <div style={{ width: "45px" }} />
         </div>
-        {headers.map((day, i) => {
+        {DAYS.map((day, i) => {
           return (
             <div className="column" key={i}>
               {day}

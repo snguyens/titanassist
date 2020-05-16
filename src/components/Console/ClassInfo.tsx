@@ -1,67 +1,46 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { getClassInfo } from "../../services";
 
-interface Props {
-  classNumber: number;
-}
+const ClassInfo = ({ classNumber }: { classNumber: number }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [classInfo, setClassInfo] = useState<any>();
 
-interface State {
-  isLoading: boolean;
-  enrollmentTotal?: string;
-  combinedSectionCap?: string;
-  waitListTotal?: string;
-  waitListCap?: string;
-  status?: string;
-  classNumber?: string;
-  units?: string;
-  dates?: string;
-  location?: string;
-  notes?: string;
-  description?: string;
-}
-
-//TODO: convert this to function component + use hooks
-class ClassInfo extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      isLoading: true
+  useEffect(() => {
+    const fn = async () => {
+      const data = await getClassInfo(classNumber);
+      setClassInfo(data);
+      setIsLoading(false);
     };
-  }
-  async componentDidMount() {
-    const classInfo = await getClassInfo(this.props.classNumber);
-    this.setState({ ...classInfo, isLoading: false });
+    fn();
+  }, []);
+
+  if (isLoading) {
+    return <div className="loader" />;
   }
 
-  render() {
-    if (this.state.isLoading) {
-      return <div className="loader" />;
-    }
-
-    return (
+  return (
+    <div>
       <div>
         <div>
-          <div>
-            Enrolled:
-            {this.state.enrollmentTotal} / {this.state.combinedSectionCap}
-          </div>
-          <div>
-            Waitlist:
-            {this.state.waitListTotal} / {this.state.waitListCap}
-          </div>
-          <div>Status: {this.state.status}</div>
-          <div>Class Number: {this.state.classNumber}</div>
-          <div>Units: {this.state.units}</div>
-          <div>Dates: {this.state.dates}</div>
-          <div>Location: {this.state.location}</div>
-          <div>Notes: {this.state.notes}</div>
-          <div>Description: {this.state.description}</div>
+          Enrolled:
+          {classInfo.enrollmentTotal} / {classInfo.combinedSectionCap}
         </div>
+        <div>
+          Waitlist:
+          {classInfo.waitListTotal} / {classInfo.waitListCap}
+        </div>
+        <div>Status: {classInfo.status}</div>
+        <div>Class Number: {classInfo.classNumber}</div>
+        <div>Units: {classInfo.units}</div>
+        <div>Dates: {classInfo.dates}</div>
+        <div>Location: {classInfo.location}</div>
+        <div>Notes: {classInfo.notes}</div>
+        <div>Description: {classInfo.description}</div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 function mapStateToProps(state: any) {
   return {

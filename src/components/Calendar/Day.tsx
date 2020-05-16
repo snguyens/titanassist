@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Hour from "./Hour";
 import "./style.css";
-import { START_HOUR, END_HOUR } from "./index";
 import { connect } from "react-redux";
 import moment from "moment";
+import { START_HOUR, END_HOUR } from "../../configs/calendar";
 
 const Day = (props: {
   Monday: any;
