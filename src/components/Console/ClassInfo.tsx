@@ -69,4 +69,7 @@ function mapStateToProps(state: any) {
   };
 }
 
-export default connect(mapStateToProps, null)(ClassInfo);
+export default connect(
+  mapStateToProps,
+  null
+)(ClassInfo);

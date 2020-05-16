@@ -1,12 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 import Day from "./Day";
 import "./style.css";
 
 export const START_HOUR = 6;
 export const END_HOUR = 23;
 
-class Calendar extends Component {
-  renderHourHeaders() {
+const Calendar = () => {
+  const renderHourHeaders = () => {
     const hourSlots: JSX.Element[] = [];
     for (let hour = START_HOUR; hour <= END_HOUR; hour++) {
       //Once the time passes 12pm, we need to subtract 12 hours
@@ -24,33 +24,31 @@ class Calendar extends Component {
       );
     }
     return hourSlots;
-  }
+  };
 
-  render() {
-    //Header text to render on top of the component. TODO: add Sat/Sun support
-    const headers = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+  //Header text to render on top of the component. TODO: add Sat/Sun support
+  const headers = ["Mon", "Tue", "Wed", "Thu", "Fri"];
 
-    return (
-      <div className="widthContainer">
-        <div className="columns is-mobile header" style={{ height: "40px" }}>
-          <div className="column is-narrow">
-            <div style={{ width: "45px" }} />
-          </div>
-          {headers.map((day, i) => {
-            return (
-              <div className="column" key={i}>
-                {day}
-              </div>
-            );
-          })}
+  return (
+    <div className="widthContainer">
+      <div className="columns is-mobile header" style={{ height: "40px" }}>
+        <div className="column is-narrow">
+          <div style={{ width: "45px" }} />
         </div>
-        <div className="columns is-mobile timeContainer">
-          <div className="hourHeaders">{this.renderHourHeaders()}</div>
-          <Day />
-        </div>
+        {headers.map((day, i) => {
+          return (
+            <div className="column" key={i}>
+              {day}
+            </div>
+          );
+        })}
       </div>
-    );
-  }
-}
+      <div className="columns is-mobile timeContainer">
+        <div className="hourHeaders">{renderHourHeaders()}</div>
+        <Day />
+      </div>
+    </div>
+  );
+};
 
 export default Calendar;

@@ -13,7 +13,7 @@ interface Props {
 
 type Status = "OPEN" | "CLOSED" | "WAITLIST";
 
-function ClassSections(props: Props) {
+const ClassSections = (props: Props) => {
   function viewClassInfo(classNumber: number) {
     props.updateClassNumber(classNumber);
     props.updateDisplay(CLASS_INFO);
@@ -134,7 +134,9 @@ function ClassSections(props: Props) {
                           }}
                           onClick={() => openRMP(detail.professor.details.pkId)}
                         >
-                          {`${detail.professor.name} [${detail.professor.details.averageRating}]`}
+                          {`${detail.professor.name} [${
+                            detail.professor.details.averageRating
+                          }]`}
                         </td>
                       ) : (
                         <td>{detail.professor.name}</td>
@@ -153,7 +155,7 @@ function ClassSections(props: Props) {
       })}
     </div>
   );
-}
+};
 
 function mapStateToProps(state: any) {
   return {
@@ -170,4 +172,7 @@ function mapDispatchToProps(dispatch: any) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ClassSections);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ClassSections);

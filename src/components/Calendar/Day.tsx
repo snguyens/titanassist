@@ -5,13 +5,13 @@ import { START_HOUR, END_HOUR } from "./index";
 import { connect } from "react-redux";
 import moment from "moment";
 
-function Day(props: {
+const Day = (props: {
   Monday: any;
   Tuesday: any;
   Wednesday: any;
   Thursday: any;
   Friday: any;
-}) {
+}) => {
   function renderHourCells(classes: any) {
     //All the Hour components that are going to be rendered for a particular day
     const rows: any = [];
@@ -49,8 +49,8 @@ function Day(props: {
               moment(childTime[1], "h:mma") <= moment(time[1], "h:mma")) ||
             (moment(childTime[0], "h:mma") <= moment(time[1], "h:mma") &&
               moment(childTime[0], "h:mma") >= moment(time[0], "h:mma")) ||
-              (moment(childTime[1], "h:mma") >= moment(time[0], "h:mma") &&
-                moment(childTime[1], "h:mma") <= moment(time[1], "h:mma"))
+            (moment(childTime[1], "h:mma") >= moment(time[0], "h:mma") &&
+              moment(childTime[1], "h:mma") <= moment(time[1], "h:mma"))
           ) {
             totalTimes.push({
               time: childTime,
@@ -111,7 +111,7 @@ function Day(props: {
   });
 
   return hourCells;
-}
+};
 
 function mapStateToProps(state: any) {
   return {
@@ -123,4 +123,7 @@ function mapStateToProps(state: any) {
   };
 }
 
-export default connect(mapStateToProps, null)(Day);
+export default connect(
+  mapStateToProps,
+  null
+)(Day);

@@ -19,7 +19,7 @@ interface Props {
   removeClass: (x: string) => {};
 }
 
-function Hour(props: Props) {
+const Hour = (props: Props) => {
   function renderClasses() {
     //Array which will hold all classes to render on the Calendar
     const classes: JSX.Element[] = [];
@@ -93,7 +93,7 @@ function Hour(props: Props) {
   }
 
   return <div className="column hourContainer">{renderClasses()}</div>;
-}
+};
 
 Hour.defaultProps = {
   classes: []
@@ -105,4 +105,7 @@ function mapDispatchToProps(dispatch: any) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(Hour);
+export default connect(
+  null,
+  mapDispatchToProps
+)(Hour);

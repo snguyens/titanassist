@@ -31,7 +31,7 @@ const routes: {
   }
 };
 
-function Console(props: Props) {
+const Console = (props: Props) => {
   //Renders the right-hand portion of the application. The user can search classes, view class info, etc...
   function renderConsole() {
     if (routes[props.display]) {
@@ -53,7 +53,7 @@ function Console(props: Props) {
 
       //Find the index in the array where the route name matches with prop.display.
       const index: number =
-        routeNames.findIndex(routeName => routeName === props.display) - 1;
+        routeNames.findIndex((routeName) => routeName === props.display) - 1;
 
       //Check to make sure index is within bounds.
       if (index < 0 || index > routeNames.length - 1) {
@@ -90,7 +90,7 @@ function Console(props: Props) {
       {renderConsole()}
     </div>
   );
-}
+};
 
 function mapStateToProps(state: any): { display: string } {
   return {
@@ -105,4 +105,7 @@ function mapDispatchToProps(dispatch: any) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Console);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Console);
