@@ -64,18 +64,11 @@ const Console = (props: Props) => {
       props.updateDisplay(routeNames[index]);
     };
 
-    //TODO: get rid of inline styling
     return (
-      <div style={{ marginBottom: 34 }}>
+      <div style={styles.container}>
         <button
           className="button is-link"
-          style={{
-            position: "fixed",
-            top: 34,
-            right: 0,
-            width: "615px",
-            borderRadius: 0
-          }}
+          style={styles.button}
           onClick={navigateBackwards}
         >
           Back
@@ -90,6 +83,17 @@ const Console = (props: Props) => {
       {renderConsole()}
     </div>
   );
+};
+
+const styles: any = {
+  container: { marginBottom: 34 },
+  button: {
+    position: "fixed",
+    top: 34,
+    right: 0,
+    width: "615px",
+    borderRadius: 0
+  }
 };
 
 function mapStateToProps(state: any): { display: string } {

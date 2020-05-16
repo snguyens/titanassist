@@ -14,13 +14,11 @@ interface Style {
   left?: string;
 }
 
-interface Props {
+const Hour = (props: {
   classes: ClassSection[];
   removeClass: (x: string) => {};
-}
-
-const Hour = (props: Props) => {
-  function renderClasses() {
+}) => {
+  const renderClasses = () => {
     //Array which will hold all classes to render on the Calendar
     const classes: JSX.Element[] = [];
 
@@ -90,7 +88,7 @@ const Hour = (props: Props) => {
       );
     });
     return classes;
-  }
+  };
 
   return <div className="column hourContainer">{renderClasses()}</div>;
 };
