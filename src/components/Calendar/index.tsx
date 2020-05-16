@@ -4,6 +4,23 @@ import "./style.css";
 import { START_HOUR, END_HOUR, DAYS } from "../../configs/calendar";
 
 const Calendar = () => {
+  const renderDayHeaders = () => {
+    return (
+      <div className="columns is-mobile header" style={{ height: "40px" }}>
+        <div className="column is-narrow">
+          <div style={{ width: "45px" }} />
+        </div>
+        {DAYS.map((day, i) => {
+          return (
+            <div className="column" key={i}>
+              {day}
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
   const renderHourHeaders = () => {
     const hourSlots: JSX.Element[] = [];
     for (let hour = START_HOUR; hour <= END_HOUR; hour++) {
@@ -21,27 +38,18 @@ const Calendar = () => {
         </div>
       );
     }
-    return hourSlots;
+    return (
+      <div className="columns is-mobile timeContainer">
+        <div className="hourHeaders">{hourSlots}</div>
+        <Day />
+      </div>
+    );
   };
 
   return (
     <div className="widthContainer">
-      <div className="columns is-mobile header" style={{ height: "40px" }}>
-        <div className="column is-narrow">
-          <div style={{ width: "45px" }} />
-        </div>
-        {DAYS.map((day, i) => {
-          return (
-            <div className="column" key={i}>
-              {day}
-            </div>
-          );
-        })}
-      </div>
-      <div className="columns is-mobile timeContainer">
-        <div className="hourHeaders">{renderHourHeaders()}</div>
-        <Day />
-      </div>
+      {renderDayHeaders()}
+      {renderHourHeaders()}
     </div>
   );
 };

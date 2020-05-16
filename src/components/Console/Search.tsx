@@ -152,7 +152,9 @@ const Search = ({ searchForClasses }: { searchForClasses: any }) => {
         style={{
           display: "flex",
           flexDirection: "column",
-          textAlign: "left"
+          textAlign: "left",
+          marginLeft: 20,
+          marginTop: 30
         }}
       >
         {renderDropDown({
