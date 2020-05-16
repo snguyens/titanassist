@@ -1,17 +1,21 @@
-import React, { Component } from "react";
+import React from "react";
 import Hour from "./Hour";
 import "./style.css";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import moment from "moment";
 import { START_HOUR, END_HOUR } from "../../configs/calendar";
 
-const Day = (props: {
-  Monday: any;
-  Tuesday: any;
-  Wednesday: any;
-  Thursday: any;
-  Friday: any;
-}) => {
+const Day = () => {
+  const { Monday, Tuesday, Wednesday, Thursday, Friday } = useSelector(
+    (state: any) => ({
+      Monday: state.classSchedule.Monday,
+      Tuesday: state.classSchedule.Tuesday,
+      Wednesday: state.classSchedule.Wednesday,
+      Thursday: state.classSchedule.Thursday,
+      Friday: state.classSchedule.Friday
+    })
+  );
+
   const renderHourCells = (classes: any) => {
     //All the Hour components that are going to be rendered for a particular day
     const rows: any = [];
@@ -96,34 +100,17 @@ const Day = (props: {
     return rows;
   };
 
-  const hourCells: any = [
-    props.Monday,
-    props.Tuesday,
-    props.Wednesday,
-    props.Thursday,
-    props.Friday
-  ].map((classes: any, i: number) => {
-    return (
-      <div className="hourCells" key={i}>
-        {renderHourCells(classes)}
-      </div>
-    );
-  });
+  const hourCells: any = [Monday, Tuesday, Wednesday, Thursday, Friday].map(
+    (classes: any, i: number) => {
+      return (
+        <div className="hourCells" key={i}>
+          {renderHourCells(classes)}
+        </div>
+      );
+    }
+  );
 
   return hourCells;
 };
 
-function mapStateToProps(state: any) {
-  return {
-    Monday: state.classSchedule.Monday,
-    Tuesday: state.classSchedule.Tuesday,
-    Wednesday: state.classSchedule.Wednesday,
-    Thursday: state.classSchedule.Thursday,
-    Friday: state.classSchedule.Friday
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  null
-)(Day);
+export default Day;
