@@ -1,23 +1,25 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { addClass, updateDisplay, updateClassNumber } from "../../actions";
 import { CLASS_INFO } from "../../constants/display";
-import "./ClassSections.css";
 
-const ClassSections = ({
-  updateClassNumber,
-  updateDisplay,
-  addClass,
-  classSections
-}: {
+interface Props {
   updateClassNumber: any;
   updateDisplay: any;
   addClass: any;
   classSections: any;
-}) => {
+}
+
+const ClassSections = () => {
+  const dispatch = useDispatch();
+
+  const { classSections } = useSelector((state: any) => ({
+    classSections: state.console.classSections
+  }));
+
   const viewClassInfo = (classNumber: number) => {
-    updateClassNumber(classNumber);
-    updateDisplay(CLASS_INFO);
+    dispatch(updateClassNumber(classNumber));
+    dispatch(updateDisplay(CLASS_INFO));
   };
 
   const addClassToCalendar = (detail: any, className: any) => {
@@ -27,10 +29,12 @@ const ClassSections = ({
       return;
     }
 
-    addClass({
-      ...detail,
-      className
-    });
+    dispatch(
+      addClass({
+        ...detail,
+        className
+      })
+    );
   };
 
   const openRMP = (pkId: any) => {
@@ -57,7 +61,6 @@ const ClassSections = ({
 
     const statusProperties = statusMap[status];
 
-    //If status is not in the map, don't render anything
     if (!statusProperties) {
       return;
     }
@@ -69,21 +72,10 @@ const ClassSections = ({
     );
   };
 
-  return classSections.map(({ details, className }: any, index: number) => {
-    return (
+  const renderClassSections = () => {
+    return classSections.map(({ details, className }: any, index: number) => (
       <div key={index}>
-        <div
-          style={{
-            fontWeight: "bold",
-            fontSize: 14,
-            textAlign: "center",
-            backgroundColor: "#00376B",
-            color: "white",
-            padding: "6px"
-          }}
-        >
-          {className}
-        </div>
+        <div style={styles.className}>{className}</div>
 
         <table
           className="table is-bordered is-hoverable"
@@ -93,13 +85,7 @@ const ClassSections = ({
           }}
         >
           <thead>
-            <tr
-              style={{
-                fontSize: 11,
-                backgroundColor: "#D3D3D3",
-                textAlign: "center"
-              }}
-            >
+            <tr style={styles.tableRow}>
               <th>Status</th>
               <th>Class</th>
               <th>Prof.</th>
@@ -110,66 +96,60 @@ const ClassSections = ({
             </tr>
           </thead>
           <tbody>
-            {details.map((detail: any, index: number) => {
-              return (
-                <tr
-                  className="classSection"
-                  style={{
-                    fontSize: 12,
-                    textAlign: "left"
-                  }}
-                  key={index}
-                >
-                  <td onClick={() => addClassToCalendar(detail, className)}>
-                    {renderStatus(detail.status)}
+            {details.map((detail: any, index: number) => (
+              <tr style={styles.class} key={index}>
+                <td onClick={() => addClassToCalendar(detail, className)}>
+                  {renderStatus(detail.status)}
+                </td>
+                <td onClick={() => viewClassInfo(detail.classNumber)}>
+                  {detail.code}
+                </td>
+                {detail.professor.details ? (
+                  <td
+                    style={{
+                      color: "#3366BB"
+                    }}
+                    onClick={() => openRMP(detail.professor.details.pkId)}
+                  >
+                    {`${detail.professor.name} [${detail.professor.details.averageRating}]`}
                   </td>
-                  <td onClick={() => viewClassInfo(detail.classNumber)}>
-                    {detail.code}
-                  </td>
-                  {detail.professor.details ? (
-                    <td
-                      style={{
-                        color: "#3366BB"
-                      }}
-                      onClick={() => openRMP(detail.professor.details.pkId)}
-                    >
-                      {`${detail.professor.name} [${
-                        detail.professor.details.averageRating
-                      }]`}
-                    </td>
-                  ) : (
-                    <td>{detail.professor.name}</td>
-                  )}
-                  <td>{detail.room}</td>
-                  <td>{detail.section}</td>
-                  <td>{detail.time}</td>
-                  <td>{detail.dates}</td>
-                </tr>
-              );
-            })}
+                ) : (
+                  <td>{detail.professor.name}</td>
+                )}
+                <td>{detail.room}</td>
+                <td>{detail.section}</td>
+                <td>{detail.time}</td>
+                <td>{detail.dates}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
-    );
-  });
+    ));
+  };
+
+  return <div>{renderClassSections()}</div>;
 };
 
-function mapStateToProps(state: any) {
-  return {
-    classSections: state.console ? state.console.classSections : []
-  };
-}
+const styles: any = {
+  class: {
+    cursor: "pointer",
+    fontSize: 12,
+    textAlign: "left"
+  },
+  className: {
+    fontWeight: "bold",
+    fontSize: 14,
+    textAlign: "center",
+    backgroundColor: "#00376B",
+    color: "white",
+    padding: "6px"
+  },
+  tableRow: {
+    fontSize: 11,
+    backgroundColor: "#D3D3D3",
+    textAlign: "center"
+  }
+};
 
-function mapDispatchToProps(dispatch: any) {
-  return {
-    addClass: (details: any) => dispatch(addClass(details)),
-    updateDisplay: (display: any) => dispatch(updateDisplay(display)),
-    updateClassNumber: (classNumber: any) =>
-      dispatch(updateClassNumber(classNumber))
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ClassSections);
+export default ClassSections;

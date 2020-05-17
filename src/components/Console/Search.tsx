@@ -1,9 +1,9 @@
-import React, { Component, Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { careerMap } from "../../constants/career";
 import { locationMap } from "../../constants/location";
 import { subjectMap } from "../../constants/subjects";
 import { termMap } from "../../constants/terms";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { searchForClasses } from "../../actions";
 
 interface DropDownConfigs {
@@ -25,15 +25,9 @@ interface CheckBoxConfigs {
   header: string;
 }
 
-interface SearchForClasses {
-  subject: string;
-  term: number;
-  career: string;
-  location: string;
-  showOpenClassesOnly: boolean;
-}
+const Search = () => {
+  const dispatch = useDispatch();
 
-const Search = ({ searchForClasses }: { searchForClasses: any }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [subject, setSubject] = useState("");
   const [term, setTerm] = useState(2193);
@@ -45,13 +39,15 @@ const Search = ({ searchForClasses }: { searchForClasses: any }) => {
   const handleSearchForClasses = async () => {
     setIsLoading(true);
     try {
-      await searchForClasses({
-        subject,
-        term,
-        career,
-        location,
-        showOpenClassesOnly
-      });
+      await dispatch(
+        searchForClasses({
+          subject,
+          term,
+          career,
+          location,
+          showOpenClassesOnly
+        })
+      );
     } catch (e) {
       window.alert(`An error has occurred while trying to search for classes!`);
     }
@@ -61,16 +57,10 @@ const Search = ({ searchForClasses }: { searchForClasses: any }) => {
   const renderDropDown = (configs: DropDownConfigs) => {
     const { state, setter, map, header, initialValue } = configs;
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          paddingBottom: "5px"
-        }}
-      >
-        <div style={{ flex: 1 }}>{header}:</div>
+      <div style={styles.dropDown}>
+        <div style={styles.header}>{header}:</div>
 
-        <div style={{ flex: 2 }}>
+        <div style={styles.content}>
           <div className="select is-small">
             <select
               value={state}
@@ -96,16 +86,10 @@ const Search = ({ searchForClasses }: { searchForClasses: any }) => {
   const renderInputField = (configs: InputFieldConfigs) => {
     const { state, setter, header, placeholder } = configs;
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          paddingBottom: "5px"
-        }}
-      >
-        <div style={{ flex: 1 }}>{header}:</div>
+      <div style={styles.inputField}>
+        <div style={styles.header}>{header}:</div>
 
-        <div style={{ flex: 2 }}>
+        <div style={styles.content}>
           <input
             style={{ width: "35%" }}
             className="input is-small"
@@ -123,13 +107,7 @@ const Search = ({ searchForClasses }: { searchForClasses: any }) => {
   const renderCheckbox = (configs: CheckBoxConfigs) => {
     const { header } = configs;
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          paddingBottom: "5px"
-        }}
-      >
+      <div style={styles.checkBoxContainer}>
         <div style={{ flex: 1 }}>{header}:</div>
 
         <div style={{ flex: 2 }}>
@@ -148,15 +126,7 @@ const Search = ({ searchForClasses }: { searchForClasses: any }) => {
 
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          textAlign: "left",
-          marginLeft: 20,
-          marginTop: 30
-        }}
-      >
+      <div style={styles.options}>
         {renderDropDown({
           state: term,
           setter: setTerm,
@@ -209,14 +179,35 @@ const Search = ({ searchForClasses }: { searchForClasses: any }) => {
   );
 };
 
-function mapDispatchToProps(dispatch: any) {
-  return {
-    searchForClasses: (configs: SearchForClasses) =>
-      dispatch(searchForClasses(configs))
-  };
-}
+const styles: any = {
+  checkBoxContainer: {
+    display: "flex",
+    flexDirection: "row",
+    paddingBottom: "5px"
+  },
+  content: {
+    flex: 2
+  },
+  dropDown: {
+    display: "flex",
+    flexDirection: "row",
+    paddingBottom: "5px"
+  },
+  header: {
+    flex: 1
+  },
+  inputField: {
+    display: "flex",
+    flexDirection: "row",
+    paddingBottom: "5px"
+  },
+  options: {
+    display: "flex",
+    flexDirection: "column",
+    textAlign: "left",
+    marginLeft: 20,
+    marginTop: 30
+  }
+};
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(Search);
+export default Search;

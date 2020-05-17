@@ -7,7 +7,7 @@ const ClassInfo = () => {
   const [classInfo, setClassInfo] = useState<any>();
 
   const { consoleClassNumber } = useSelector((state: any) => ({
-    consoleClassNumber: state.console ? state.console.classNumber : null
+    consoleClassNumber: state.console.classNumber
   }));
 
   useEffect(() => {

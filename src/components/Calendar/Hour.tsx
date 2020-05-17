@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import "./style.css";
 import { removeClass } from "../../actions";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { ClassSection } from "../../interfaces";
 import { computeTopAndBottom } from "../../utilities/computeClassCellSize";
+
+interface Props {
+  classes: ClassSection[];
+}
 
 interface Style {
   backgroundColor: string;
@@ -13,13 +17,9 @@ interface Style {
   left?: string;
 }
 
-const Hour = ({
-  classes,
-  removeClass
-}: {
-  classes: ClassSection[];
-  removeClass: (x: string) => {};
-}) => {
+const Hour = ({ classes = [] }: Props) => {
+  const dispatch = useDispatch();
+
   const renderClasses = () => {
     return classes.map(({ time, color, cell, code, className }, index) => {
       //Example: class is from 11:30AM - 2:20 PM
@@ -44,7 +44,7 @@ const Hour = ({
           className="classContainer"
           style={style}
           key={index}
-          onClick={() => removeClass(code)}
+          onClick={() => dispatch(removeClass(code))}
         >
           <div className="font">
             {`${time}`}
@@ -61,17 +61,4 @@ const Hour = ({
   return <div className="column hourContainer">{renderClasses()}</div>;
 };
 
-Hour.defaultProps = {
-  classes: []
-};
-
-function mapDispatchToProps(dispatch: any) {
-  return {
-    removeClass: (code: string) => dispatch(removeClass(code))
-  };
-}
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(Hour);
+export default Hour;
