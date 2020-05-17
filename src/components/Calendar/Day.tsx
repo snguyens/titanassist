@@ -4,6 +4,7 @@ import "./style.css";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { START_HOUR, END_HOUR } from "../../configs/calendar";
+import { ClassSection } from "../../interfaces";
 
 const Day = () => {
   const { Monday, Tuesday, Wednesday, Thursday, Friday } = useSelector(
@@ -16,10 +17,12 @@ const Day = () => {
     })
   );
 
-  const renderHourCells = (classes: any) => {
+  const renderHourCells = (classes: ClassSection[]) => {
     const rows: JSX.Element[] = [];
 
-    const classMap: any = generateClassMap(classes);
+    const classMap: { [key: number]: ClassSection[] } = generateClassMap(
+      classes
+    );
 
     for (let hour = START_HOUR; hour <= END_HOUR; hour++) {
       rows.push(<Hour key={hour} classes={classMap[hour]} />);
@@ -27,11 +30,13 @@ const Day = () => {
     return rows;
   };
 
-  const generateClassMap = (classes: any) => {
-    const classMap: any = {};
-    const sizeMap: any = generateSizeMap(classes);
+  const generateClassMap = (classes: ClassSection[]) => {
+    const classMap: { [key: number]: ClassSection[] } = {};
+    const sizeMap: {
+      [key: string]: { index: number; totalSize: number };
+    } = generateSizeMap(classes);
 
-    classes.forEach((currClass: any) => {
+    classes.forEach((currClass: ClassSection) => {
       if (sizeMap[currClass.code]) {
         currClass.cell = sizeMap[currClass.code];
       }
@@ -55,16 +60,16 @@ const Day = () => {
     return classMap;
   };
 
-  const generateSizeMap = (classes: any) => {
+  const generateSizeMap = (classes: ClassSection[]) => {
     //Map used to determine how to divide classes that fall within the same time range
-    const sizeMap: { [key: number]: { index: number; totalSize: number } } = {};
+    const sizeMap: { [key: string]: { index: number; totalSize: number } } = {};
 
     for (let i = 0; i < classes.length; i++) {
       const totalTimes = [
         { time: classes[i].time.split(" - "), code: classes[i].code }
       ];
 
-      const localVisitedMap: { [key: number]: boolean } = {};
+      const localVisitedMap: { [key: string]: boolean } = {};
 
       for (let j = 0; j < classes.length; j++) {
         if (i === j || localVisitedMap[classes[j].code]) {
@@ -116,8 +121,8 @@ const Day = () => {
     return sizeMap;
   };
 
-  const hourCells: any = [Monday, Tuesday, Wednesday, Thursday, Friday].map(
-    (classes: any, i: number) => {
+  const hourCells = [Monday, Tuesday, Wednesday, Thursday, Friday].map(
+    (classes, i: number) => {
       return (
         <div className="hourCells" key={i}>
           {renderHourCells(classes)}

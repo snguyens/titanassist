@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getClassInfo } from "../../services";
+import { IClassDetails } from "../../interfaces";
 
-const ClassDetail = () => {
+const ClassDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [classInfo, setClassInfo] = useState<any>();
+  const [classInfo, setClassInfo] = useState<IClassDetails>();
 
   const { consoleClassNumber } = useSelector((state: any) => ({
     consoleClassNumber: state.console.classNumber
@@ -19,7 +20,7 @@ const ClassDetail = () => {
     fn();
   }, []);
 
-  if (isLoading) {
+  if (isLoading || !classInfo) {
     return <div className="loader" />;
   }
 
@@ -45,4 +46,4 @@ const ClassDetail = () => {
   );
 };
 
-export default ClassDetail;
+export default ClassDetails;

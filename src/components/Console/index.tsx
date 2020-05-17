@@ -1,6 +1,6 @@
 import React from "react";
 import Search from "../Search";
-import ClassDetail from "../Class/detail";
+import ClassDetail from "../Class/details";
 import ClassSections from "../Class/sections";
 import { SEARCH, CLASS_DETAIL, CLASS_SECTIONS } from "../../constants/display";
 import { useSelector, useDispatch } from "react-redux";

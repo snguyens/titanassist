@@ -32,7 +32,7 @@ const Search = () => {
   const [subject, setSubject] = useState("");
 
   //TODO: avoid hardcoding this
-  const [term, setTerm] = useState(2193);
+  const [term, setTerm] = useState("2193");
 
   const [courseNumber, setCourseNumber] = useState("");
   const [career, setCareer] = useState("");

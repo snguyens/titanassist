@@ -1,4 +1,5 @@
 import { api } from "./apiConfig";
+import { SearchOptions } from "../interfaces";
 
 export const getClassInfo = async (classNumber: number) => {
   const { data } = await api.get("/classInfo", {
@@ -11,7 +12,7 @@ export const getClassInfo = async (classNumber: number) => {
   return data;
 };
 
-export const getClassSections = async (configs: any) => {
+export const getClassSections = async (configs: SearchOptions) => {
   async function apiRequest() {
     const { data } = await api.get("/classSections", {
       params: {

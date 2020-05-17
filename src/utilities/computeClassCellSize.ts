@@ -1,6 +1,6 @@
 const CELL_HEIGHT_PX = 60;
 
-export const computeTopAndBottom = (classSectionTime: any) => {
+export const computeTopAndBottom = (classSectionTime: string) => {
   //Convert "11:30AM - 2:20PM" into ["11:30 AM", "2:20 PM"]
   const time: string[] = classSectionTime.split(" - ");
 

@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import "./style.css";
 import { removeClass } from "../../actions";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ClassSection } from "../../interfaces";
 import { computeTopAndBottom } from "../../utilities/computeClassCellSize";
 
@@ -22,12 +22,11 @@ const Hour = ({ classes = [] }: Props) => {
 
   const renderClasses = () => {
     return classes.map(({ time, color, cell, code, className }, index) => {
-      //Example: class is from 11:30AM - 2:20 PM
+      //"time" would be in the format: "11:30AM - 2:20PM"
 
-      //currentCLass.time would be in the format: "11:30AM - 2:20PM"
       const { bottom, top } = computeTopAndBottom(time);
 
-      //Handles size changing if there are multiple classes that fall within the same time
+      //Handles size changing if there are multiple classes that fall within the same time window
       const style: Style = {
         backgroundColor: color,
         top: top,

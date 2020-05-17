@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addClass, updateDisplay, updateClassNumber } from "../../actions";
 import { CLASS_DETAIL } from "../../constants/display";
+import { ClassDetailsCalendar } from "../../interfaces";
 
 const ClassSections = () => {
   const dispatch = useDispatch();
@@ -15,13 +16,15 @@ const ClassSections = () => {
     dispatch(updateDisplay(CLASS_DETAIL));
   };
 
-  const addClassToCalendar = (detail: any, className: any) => {
+  const addClassToCalendar = (
+    detail: ClassDetailsCalendar,
+    className: string
+  ) => {
     //Some classes might not have their times yet, prevent the user from adding those classes.
     if (detail.time === "TBA") {
       window.alert(`The time for class ${detail.code} is currently TBA!`);
       return;
     }
-
     dispatch(
       addClass({
         ...detail,
@@ -30,7 +33,7 @@ const ClassSections = () => {
     );
   };
 
-  const openRMP = (pkId: any) => {
+  const openRMP = (pkId: string) => {
     window.open(`http://www.ratemyprofessors.com/ShowRatings.jsp?tid=${pkId}`);
   };
 
@@ -66,50 +69,64 @@ const ClassSections = () => {
   };
 
   const renderClassSections = () => {
-    return classSections.map(({ details, className }: any, index: number) => (
-      <div key={index}>
-        <div style={styles.className}>{className}</div>
+    return classSections.map(
+      (
+        {
+          details,
+          className
+        }: { details: ClassDetailsCalendar[]; className: string },
+        index: number
+      ) => (
+        <div key={index}>
+          <div style={styles.className}>{className}</div>
 
-        <table className="table is-bordered is-hoverable" style={styles.table}>
-          <thead>
-            <tr style={styles.tableRow}>
-              <th>Status</th>
-              <th>Class</th>
-              <th>Prof.</th>
-              <th>Room</th>
-              <th>Section</th>
-              <th>Time</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {details.map((detail: any, index: number) => (
-              <tr style={styles.class} key={index}>
-                <td onClick={() => addClassToCalendar(detail, className)}>
-                  {renderStatus(detail.status)}
-                </td>
-                <td onClick={() => viewClassInfo(detail.classNumber)}>
-                  {detail.code}
-                </td>
-                {detail.professor.details ? (
-                  <td
-                    style={styles.professor}
-                    onClick={() => openRMP(detail.professor.details.pkId)}
-                  >
-                    {`${detail.professor.name} [${detail.professor.details.averageRating}]`}
-                  </td>
-                ) : (
-                  <td>{detail.professor.name}</td>
-                )}
-                <td>{detail.room}</td>
-                <td>{detail.section}</td>
-                <td>{detail.time}</td>
-                <td>{detail.dates}</td>
+          <table
+            className="table is-bordered is-hoverable"
+            style={styles.table}
+          >
+            <thead>
+              <tr style={styles.tableRow}>
+                <th>Status</th>
+                <th>Class</th>
+                <th>Prof.</th>
+                <th>Room</th>
+                <th>Section</th>
+                <th>Time</th>
+                <th>Date</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>{renderClassDetails(details, className)}</tbody>
+          </table>
+        </div>
+      )
+    );
+  };
+
+  const renderClassDetails = (
+    details: ClassDetailsCalendar[],
+    className: string
+  ) => {
+    return details.map((detail: ClassDetailsCalendar, index: number) => (
+      <tr style={styles.class} key={index}>
+        <td onClick={() => addClassToCalendar(detail, className)}>
+          {renderStatus(detail.status)}
+        </td>
+        <td onClick={() => viewClassInfo(detail.classNumber)}>{detail.code}</td>
+        {detail.professor.details ? (
+          <td
+            style={styles.professor}
+            onClick={() => openRMP(detail.professor.details.pkId)}
+          >
+            {`${detail.professor.name} [${detail.professor.details.averageRating}]`}
+          </td>
+        ) : (
+          <td>{detail.professor.name}</td>
+        )}
+        <td>{detail.room}</td>
+        <td>{detail.section}</td>
+        <td>{detail.time}</td>
+        <td>{detail.dates}</td>
+      </tr>
     ));
   };
 
