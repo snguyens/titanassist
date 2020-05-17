@@ -3,13 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { addClass, updateDisplay, updateClassNumber } from "../../actions";
 import { CLASS_INFO } from "../../constants/display";
 
-interface Props {
-  updateClassNumber: any;
-  updateDisplay: any;
-  addClass: any;
-  classSections: any;
-}
-
 const ClassSections = () => {
   const dispatch = useDispatch();
 
@@ -77,13 +70,7 @@ const ClassSections = () => {
       <div key={index}>
         <div style={styles.className}>{className}</div>
 
-        <table
-          className="table is-bordered is-hoverable"
-          style={{
-            marginBottom: 0,
-            width: "100%"
-          }}
-        >
+        <table className="table is-bordered is-hoverable" style={styles.table}>
           <thead>
             <tr style={styles.tableRow}>
               <th>Status</th>
@@ -106,9 +93,7 @@ const ClassSections = () => {
                 </td>
                 {detail.professor.details ? (
                   <td
-                    style={{
-                      color: "#3366BB"
-                    }}
+                    style={styles.professor}
                     onClick={() => openRMP(detail.professor.details.pkId)}
                   >
                     {`${detail.professor.name} [${detail.professor.details.averageRating}]`}
@@ -144,6 +129,13 @@ const styles: any = {
     backgroundColor: "#00376B",
     color: "white",
     padding: "6px"
+  },
+  professor: {
+    color: "#3366BB"
+  },
+  table: {
+    marginBottom: 0,
+    width: "100%"
   },
   tableRow: {
     fontSize: 11,

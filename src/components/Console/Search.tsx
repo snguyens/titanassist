@@ -30,7 +30,10 @@ const Search = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [subject, setSubject] = useState("");
+
+  //TODO: avoid hardcoding this
   const [term, setTerm] = useState(2193);
+
   const [courseNumber, setCourseNumber] = useState("");
   const [career, setCareer] = useState("");
   const [location, setLocation] = useState("");
@@ -86,12 +89,12 @@ const Search = () => {
   const renderInputField = (configs: InputFieldConfigs) => {
     const { state, setter, header, placeholder } = configs;
     return (
-      <div style={styles.inputField}>
+      <div style={styles.inputFieldContainer}>
         <div style={styles.header}>{header}:</div>
 
         <div style={styles.content}>
           <input
-            style={{ width: "35%" }}
+            style={styles.inputField}
             className="input is-small"
             type="text"
             value={state}
@@ -108,9 +111,9 @@ const Search = () => {
     const { header } = configs;
     return (
       <div style={styles.checkBoxContainer}>
-        <div style={{ flex: 1 }}>{header}:</div>
+        <div style={styles.header}>{header}:</div>
 
-        <div style={{ flex: 2 }}>
+        <div style={styles.content}>
           <label className="checkbox">
             <input
               type="checkbox"
@@ -121,6 +124,18 @@ const Search = () => {
           </label>
         </div>
       </div>
+    );
+  };
+
+  const renderSearchButton = () => {
+    return (
+      <button
+        className={"button is-link " + (isLoading ? "is-loading" : "")}
+        style={{ marginTop: "50px" }}
+        onClick={handleSearchForClasses}
+      >
+        Search
+      </button>
     );
   };
 
@@ -168,13 +183,7 @@ const Search = () => {
           header: "Show Open Classes Only"
         })}
       </div>
-      <button
-        className={"button is-link " + (isLoading ? "is-loading" : "")}
-        style={{ marginTop: "50px" }}
-        onClick={handleSearchForClasses}
-      >
-        Search
-      </button>
+      {renderSearchButton()}
     </div>
   );
 };
@@ -196,7 +205,8 @@ const styles: any = {
   header: {
     flex: 1
   },
-  inputField: {
+  inputField: { width: "35%" },
+  inputFieldContainer: {
     display: "flex",
     flexDirection: "row",
     paddingBottom: "5px"

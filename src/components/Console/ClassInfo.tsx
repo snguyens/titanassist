@@ -23,7 +23,7 @@ const ClassInfo = () => {
     return <div className="loader" />;
   }
 
-  //TODO: styling
+  //TODO: add styling
   return (
     <div>
       <div>
