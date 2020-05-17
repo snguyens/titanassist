@@ -6,7 +6,9 @@ import {
   SearchOptions
 } from "../interfaces";
 
-export const updateClassSections = (classSections: ClassSection) => ({
+export const updateClassSections = (
+  classSections: { details: ClassDetailsCalendar[]; className: string }[]
+) => ({
   type: "UPDATE_CLASS_SECTIONS",
   classSections
 });

@@ -2,11 +2,11 @@ import React from "react";
 import "./style.css";
 import { removeClass } from "../../actions";
 import { useDispatch } from "react-redux";
-import { ClassSection } from "../../interfaces";
+import { ClassSectionCalendar } from "../../interfaces";
 import { computeTopAndBottom } from "../../utilities/computeClassCellSize";
 
 interface Props {
-  classes: ClassSection[];
+  classes: ClassSectionCalendar[];
 }
 
 interface Style {

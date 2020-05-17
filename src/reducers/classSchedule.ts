@@ -1,4 +1,7 @@
 import classColors from "../constants/classColors";
+import { ClassSection } from "../interfaces";
+
+const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
 const classSchedule = (
   state: any = {
@@ -13,13 +16,7 @@ const classSchedule = (
 ) => {
   switch (action.type) {
     case "ADD_CLASS":
-      const currentClasses = [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday"
-      ].reduce((acc, curr) => {
+      const currentClasses = days.reduce((acc, curr) => {
         for (const { code } of state[curr]) {
           acc.add(code);
         }
@@ -31,13 +28,13 @@ const classSchedule = (
         return state;
       }
 
-      const Monday: any = [];
-      const Tuesday: any = [];
-      const Wednesday: any = [];
-      const Thursday: any = [];
-      const Friday: any = [];
+      const Monday: ClassSection[] = [];
+      const Tuesday: ClassSection[] = [];
+      const Wednesday: ClassSection[] = [];
+      const Thursday: ClassSection[] = [];
+      const Friday: ClassSection[] = [];
 
-      const dayMap: any = {
+      const dayMap: { [key: string]: ClassSection[] } = {
         Mo: Monday,
         Tu: Tuesday,
         We: Wednesday,
@@ -68,6 +65,7 @@ const classSchedule = (
           }
         }
       }
+
       return {
         Monday: [...state.Monday, ...Monday],
         Tuesday: [...state.Tuesday, ...Tuesday],
@@ -76,6 +74,7 @@ const classSchedule = (
         Friday: [...state.Friday, ...Friday],
         colorIndex: colorIndex + 1
       };
+
     case "REMOVE_CLASS":
       const newState: any = {
         Monday: [...state.Monday],
@@ -88,7 +87,6 @@ const classSchedule = (
             ? state.colorIndex - 1
             : classColors.length - 1
       };
-      const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
       for (const day of days) {
         for (let i = 0; i < newState[day].length; ) {
           if (newState[day][i].code === action.code) {
@@ -98,8 +96,8 @@ const classSchedule = (
           }
         }
       }
-
       return newState;
+
     default:
       return state;
   }

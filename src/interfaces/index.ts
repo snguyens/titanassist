@@ -33,15 +33,18 @@ export interface ClassDetailsCalendar {
 }
 
 export interface ClassSection {
-  cell: {
-    index: number;
-    totalSize: number;
-  };
   className: string;
   code: string;
   color: string;
   location: string;
   time: string;
+}
+
+export interface ClassSectionCalendar extends ClassSection {
+  cell: {
+    index: number;
+    totalSize: number;
+  };
 }
 
 export interface SearchOptions {

@@ -4,7 +4,14 @@ import "./style.css";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { START_HOUR, END_HOUR } from "../../configs/calendar";
-import { ClassSection } from "../../interfaces";
+import { ClassSectionCalendar } from "../../interfaces";
+
+interface ClassMap {
+  [key: number]: ClassSectionCalendar[];
+}
+interface SizeMap {
+  [key: string]: { index: number; totalSize: number };
+}
 
 const Day = () => {
   const { Monday, Tuesday, Wednesday, Thursday, Friday } = useSelector(
@@ -17,12 +24,10 @@ const Day = () => {
     })
   );
 
-  const renderHourCells = (classes: ClassSection[]) => {
+  const renderHourCells = (classes: ClassSectionCalendar[]) => {
     const rows: JSX.Element[] = [];
 
-    const classMap: { [key: number]: ClassSection[] } = generateClassMap(
-      classes
-    );
+    const classMap: ClassMap = generateClassMap(classes);
 
     for (let hour = START_HOUR; hour <= END_HOUR; hour++) {
       rows.push(<Hour key={hour} classes={classMap[hour]} />);
@@ -30,13 +35,11 @@ const Day = () => {
     return rows;
   };
 
-  const generateClassMap = (classes: ClassSection[]) => {
-    const classMap: { [key: number]: ClassSection[] } = {};
-    const sizeMap: {
-      [key: string]: { index: number; totalSize: number };
-    } = generateSizeMap(classes);
+  const generateClassMap = (classes: ClassSectionCalendar[]) => {
+    const classMap: ClassMap = {};
+    const sizeMap: SizeMap = generateSizeMap(classes);
 
-    classes.forEach((currClass: ClassSection) => {
+    classes.forEach((currClass: ClassSectionCalendar) => {
       if (sizeMap[currClass.code]) {
         currClass.cell = sizeMap[currClass.code];
       }
@@ -60,9 +63,9 @@ const Day = () => {
     return classMap;
   };
 
-  const generateSizeMap = (classes: ClassSection[]) => {
+  const generateSizeMap = (classes: ClassSectionCalendar[]) => {
     //Map used to determine how to divide classes that fall within the same time range
-    const sizeMap: { [key: string]: { index: number; totalSize: number } } = {};
+    const sizeMap: SizeMap = {};
 
     for (let i = 0; i < classes.length; i++) {
       const totalTimes = [
