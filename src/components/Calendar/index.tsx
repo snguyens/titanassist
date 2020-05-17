@@ -23,10 +23,9 @@ const Calendar = () => {
 
   const renderHourHeaders = () => {
     const hourSlots: JSX.Element[] = [];
-    for (let hour = START_HOUR; hour <= END_HOUR; hour++) {
-      //Once the time passes 12pm, we need to subtract 12 hours
-      const currentHour = hour <= 12 ? hour : hour - 12;
 
+    for (let hour = START_HOUR; hour <= END_HOUR; hour++) {
+      const currentHour = hour <= 12 ? hour : hour - 12;
       const meridiem = hour >= 12 ? "PM" : "AM";
 
       hourSlots.push(
@@ -38,6 +37,7 @@ const Calendar = () => {
         </div>
       );
     }
+
     return (
       <div className="columns is-mobile timeContainer">
         <div className="hourHeaders">{hourSlots}</div>

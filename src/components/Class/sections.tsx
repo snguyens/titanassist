@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addClass, updateDisplay, updateClassNumber } from "../../actions";
-import { CLASS_INFO } from "../../constants/display";
+import { CLASS_DETAIL } from "../../constants/display";
 
 const ClassSections = () => {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ const ClassSections = () => {
 
   const viewClassInfo = (classNumber: number) => {
     dispatch(updateClassNumber(classNumber));
-    dispatch(updateDisplay(CLASS_INFO));
+    dispatch(updateDisplay(CLASS_DETAIL));
   };
 
   const addClassToCalendar = (detail: any, className: any) => {

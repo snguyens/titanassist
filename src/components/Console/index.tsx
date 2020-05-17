@@ -1,8 +1,8 @@
 import React from "react";
-import Search from "./Search";
-import ClassInfo from "./ClassInfo";
-import ClassSections from "./ClassSections";
-import { SEARCH, CLASS_INFO, CLASS_SECTIONS } from "../../constants/display";
+import Search from "../Search";
+import ClassDetail from "../Class/detail";
+import ClassSections from "../Class/sections";
+import { SEARCH, CLASS_DETAIL, CLASS_SECTIONS } from "../../constants/display";
 import { useSelector, useDispatch } from "react-redux";
 import { updateDisplay } from "../../actions";
 
@@ -19,8 +19,8 @@ const routes: {
     component: <ClassSections />,
     renderBackButton: true
   },
-  [CLASS_INFO]: {
-    component: <ClassInfo />,
+  [CLASS_DETAIL]: {
+    component: <ClassDetail />,
     renderBackButton: true
   }
 };

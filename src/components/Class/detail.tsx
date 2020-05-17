@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getClassInfo } from "../../services";
 
-const ClassInfo = () => {
+const ClassDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [classInfo, setClassInfo] = useState<any>();
 
@@ -45,4 +45,4 @@ const ClassInfo = () => {
   );
 };
 
-export default ClassInfo;
+export default ClassDetail;
